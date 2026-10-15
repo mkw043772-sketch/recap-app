@@ -3,24 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>RECAP MM v17</title>
+<title>RECAP MM v19 - 3.5 Flash-Lite & Cloud TTS</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 body{background:#090d16;color:#f8fafc;font-family:sans-serif}
-.card{background:#111827;border:1px solid #374151;border-radius:16px;padding:16px;margin-bottom:14px}
+.card{background:#111827;border:1px solid #374151;border-radius:16px;padding:15px;margin-bottom:12px}
 .btn-main{background:linear-gradient(90deg,#f59e0b,#ec4899);color:#fff;font-weight:bold;padding:12px;border-radius:12px;width:100%}
 .btn-gen{background:linear-gradient(90deg,#4f46e5,#9333ea);color:#fff;font-weight:bold;padding:14px;border-radius:12px;width:100%}
 .active-r{background:#4f46e5!important;color:#fff!important}
 </style>
 </head>
-<body class="p-3 max-w-xl mx-auto">
+<body class="p-3 max-w-xl mx-auto pb-16">
 
-<div class="card flex flex-col gap-3">
+<div class="card flex flex-col gap-2.5">
   <div class="flex items-center justify-between">
-    <h1 class="font-bold text-lg">🎬 RECAP MM <span class="text-xs bg-emerald-600 px-2 py-0.5 rounded">v17 FIX</span></h1>
+    <div>
+      <h1 class="font-bold text-base">🎬 RECAP MM <span class="text-xs bg-emerald-600 px-2 py-0.5 rounded">v19 CLOUD</span></h1>
+      <p class="text-[11px] text-slate-400">3.5 Flash-Lite + Google Cloud TTS</p>
+    </div>
     <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-xs bg-amber-500/20 text-amber-300 px-3 py-1.5 rounded-lg border border-amber-500/40">🔗 Key ယူရန်</a>
   </div>
-  <input type="password" id="geminiKey" placeholder="🔑 Gemini API Key ဒီမှာထည့်ပါ" class="w-full bg-slate-900 border border-amber-500/60 rounded-xl px-3 py-2 text-xs">
+  <input type="password" id="geminiKey" placeholder="🔑 Gemini API Key (3.5 Flash-Lite အတွက်)" class="w-full bg-slate-900 border border-amber-500/60 rounded-xl px-3 py-2 text-xs">
+  <input type="password" id="cloudTtsKey" placeholder="☁️ Google Cloud TTS API Key (တူလျှင် ထည့်ရန်မလိုပါ)" class="w-full bg-slate-900 border border-indigo-500/50 rounded-xl px-3 py-2 text-xs">
 </div>
 
 <div class="card">
@@ -28,22 +32,22 @@ body{background:#090d16;color:#f8fafc;font-family:sans-serif}
     <span class="text-xs font-bold text-indigo-400">၁။ ဗီဒီယိုဖိုင် တင်ရန်</span>
     <span id="durationTag" class="text-xs text-slate-400">00:00</span>
   </div>
-  <input type="file" id="videoUpload" accept="video/*" class="w-full text-xs text-slate-300 file:mr-3 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white">
+  <input type="file" id="videoUpload" accept="video/*" class="w-full text-xs text-slate-300 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-indigo-600 file:text-white">
   <p id="uploadLabel" class="text-xs text-emerald-400 mt-2"></p>
 </div>
 
 <div class="card">
-  <div class="flex justify-between mb-2">
-    <span class="text-xs font-bold text-amber-400">၂။ AI ဇာတ်လမ်းနှင့် အသံ</span>
-    <button type="button" id="previewVoiceBtn" class="text-xs bg-indigo-600 px-2.5 py-1 rounded-lg font-bold">🔊 အသံစမ်းရန်</button>
+  <div class="flex justify-between items-center mb-2">
+    <span class="text-xs font-bold text-amber-400">၂။ 3.5 Flash-Lite စခရစ် နှင့် Cloud TTS</span>
+    <button type="button" id="previewVoiceBtn" class="text-xs bg-indigo-600 px-3 py-1.5 rounded-lg font-bold">🔊 Cloud TTS အသံစမ်းရန်</button>
   </div>
-  <button type="button" id="aiAnalyzeBtn" class="btn-main text-xs mb-3">🧠 AI ဖြင့် ဗီဒီယိုစစ်ဆေးပြီး ဇာတ်လမ်းထုတ်မည်</button>
-  <div id="statusLog" class="hidden text-xs p-2 rounded bg-slate-950 text-amber-300 mb-2 break-words"></div>
-  <textarea id="recapScript" rows="5" placeholder="[00:00] စာသား..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs"></textarea>
+  <button type="button" id="aiAnalyzeBtn" class="btn-main text-xs mb-3">🧠 3.5 Flash-Lite ဖြင့် မြင်ကွင်း+ပြောစကား စခရစ်ထုတ်မည်</button>
+  <div id="statusLog" class="hidden text-xs p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-amber-300 mb-2 break-words"></div>
+  <textarea id="recapScript" rows="6" placeholder="[00:00] ဗီဒီယိုတင်ပြီး စခရစ်ထုတ်ပါ..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-2.5 text-xs leading-relaxed"></textarea>
 </div>
 
 <div class="card">
-  <span class="text-xs font-bold text-indigo-400 block mb-2">၃။ အချိုးအစား နှင့် အသံ</span>
+  <span class="text-xs font-bold text-indigo-400 block mb-2">၃။ အချိုးအစား နှင့် Google Cloud TTS အသံ</span>
   <div class="grid grid-cols-4 gap-2 mb-3">
     <button type="button" data-ratio="9:16" class="ratio-btn active-r bg-slate-800 py-1.5 rounded-lg text-xs font-bold">9:16</button>
     <button type="button" data-ratio="16:9" class="ratio-btn bg-slate-800 py-1.5 rounded-lg text-xs font-bold">16:9</button>
@@ -51,11 +55,11 @@ body{background:#090d16;color:#f8fafc;font-family:sans-serif}
     <button type="button" data-ratio="4:5" class="ratio-btn bg-slate-800 py-1.5 rounded-lg text-xs font-bold">4:5</button>
   </div>
   <div class="grid grid-cols-2 gap-2 text-xs">
-    <label class="bg-slate-900 p-2 rounded-lg flex items-center gap-2">
-      <input type="radio" name="aiVoice" value="FEMALE" checked> 👩 မိန်းကလေးအသံ
+    <label class="bg-slate-900 p-2.5 rounded-lg flex items-center gap-2 border border-slate-800">
+      <input type="radio" name="aiVoice" value="FEMALE" checked> 👩 မိန်းကလေး (my-MM)
     </label>
-    <label class="bg-slate-900 p-2 rounded-lg flex items-center gap-2">
-      <input type="radio" name="aiVoice" value="MALE"> 👦 ယောက်ျားလေးအသံ
+    <label class="bg-slate-900 p-2.5 rounded-lg flex items-center gap-2 border border-slate-800">
+      <input type="radio" name="aiVoice" value="MALE"> 👦 ယောက်ျားလေး (my-MM)
     </label>
   </div>
 </div>
@@ -72,7 +76,7 @@ body{background:#090d16;color:#f8fafc;font-family:sans-serif}
       <div id="renderBar" class="bg-indigo-500 h-full w-0"></div>
     </div>
   </div>
-  <button type="button" id="startGenerateBtn" class="btn-gen text-xs mb-2">🚀 အသံပါသော ဗီဒီယို Generate လုပ်မည်</button>
+  <button type="button" id="startGenerateBtn" class="btn-gen text-xs mb-2">🚀 Cloud TTS အသံဖြင့် ဗီဒီယို Generate လုပ်မည်</button>
   <a id="downloadReadyBtn" class="w-full bg-emerald-600 text-center py-3 rounded-xl text-xs font-bold opacity-40 pointer-events-none">📥 ဒေါင်းလုဒ်ဆွဲရန်</a>
 </div>
 
@@ -85,18 +89,18 @@ const ctx = studioCanvas.getContext('2d');
 const recapScript = el('recapScript');
 const statusLog = el('statusLog');
 const geminiKey = el('geminiKey');
+const cloudTtsKey = el('cloudTtsKey');
 
 let uploadedFile = null;
 let curRatio = '9:16';
 let subText = "";
 let isBusy = false;
 
-if (localStorage.getItem('rk_key')) {
-  geminiKey.value = localStorage.getItem('rk_key');
-}
-geminiKey.oninput = () => {
-  localStorage.setItem('rk_key', geminiKey.value.trim());
-};
+if (localStorage.getItem('rk_gkey')) geminiKey.value = localStorage.getItem('rk_gkey');
+if (localStorage.getItem('rk_ckey')) cloudTtsKey.value = localStorage.getItem('rk_ckey');
+
+geminiKey.oninput = () => localStorage.setItem('rk_gkey', geminiKey.value.trim());
+cloudTtsKey.oninput = () => localStorage.setItem('rk_ckey', cloudTtsKey.value.trim());
 
 function log(m) {
   statusLog.classList.remove('hidden');
@@ -169,124 +173,214 @@ function drawFrame() {
   }
 }
 
-async function getTtsBuffer(actx, text) {
-  const clean = text.split(/\n+/).map(l => l.replace(/^\[\d+:\d+\]\s*/, '').trim()).filter(Boolean).join(' ။ ');
-  if (!clean) throw new Error("စာသားမရှိပါ");
-  const chunks = [];
-  for (let i = 0; i < clean.length; i += 120) {
-    chunks.push(clean.slice(i, i + 120));
+function fileToBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result.split(',')[1]);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+// Convert LINEAR16 WAV/PCM Base64 from Google Cloud TTS to AudioBuffer
+function pcm16ToAudioBuffer(actx, b64, rate = 24000) {
+  const bin = atob(b64);
+  // Skip 44-byte WAV header if present
+  const startOffset = (bin.slice(0, 4) === 'RIFF') ? 44 : 0;
+  const samples = Math.floor((bin.length - startOffset) / 2);
+  const buf = actx.createBuffer(1, samples, rate);
+  const ch = buf.getChannelData(0);
+  for (let i = 0; i < samples; i++) {
+    const idx = startOffset + i * 2;
+    const lo = bin.charCodeAt(idx);
+    const hi = bin.charCodeAt(idx + 1);
+    let val = (hi << 8) | lo;
+    if (val >= 0x8000) val -= 0x10000;
+    ch[i] = val / 32768.0;
   }
-  const bufs = [];
-  for (let i = 0; i < chunks.length; i++) {
-    log("🎙️ Google TTS အသံဆွဲယူနေသည် (" + (i + 1) + "/" + chunks.length + ")...");
-    const q = encodeURIComponent(chunks[i]);
-    const gUrl = "https://translate.google.com/translate_tts?ie=UTF-8&q=" + q + "&tl=my&client=tw-ob";
-    const pUrl = "https://corsproxy.io/?" + encodeURIComponent(gUrl);
-    const r = await fetch(pUrl);
-    const ab = await r.arrayBuffer();
-    const dec = await actx.decodeAudioData(ab);
-    bufs.push(dec);
+  return buf;
+}
+
+// Google Cloud Text-to-Speech API Generator
+async function getCloudTtsAudioBuffer(actx, rawText) {
+  const ttsKey = cloudTtsKey.value.trim() || geminiKey.value.trim();
+  if (!ttsKey) throw new Error("API Key ထည့်ပေးပါ");
+
+  const gender = document.querySelector('input[name="aiVoice"]:checked').value;
+  const clean = rawText.split(/\n+/).map(l => l.replace(/^\[\d+:\d+\]\s*/, '').trim()).filter(Boolean).join(' ။ ');
+  if (!clean) throw new Error("အသံထုတ်ရန် စာသားမရှိပါ");
+
+  log("☁️ Google Cloud Text-to-Speech API (my-MM) ဖြင့် အသံဖိုင်ထုတ်နေသည်...");
+
+  // 1. Call Official Google Cloud Text-to-Speech API (LINEAR16 PCM for 100% browser compatibility)
+  const res = await fetch("https://texttospeech.googleapis.com/v1/text:synthesize?key=" + ttsKey, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      input: { text: clean },
+      voice: {
+        languageCode: 'my-MM',
+        ssmlGender: gender
+      },
+      audioConfig: {
+        audioEncoding: 'LINEAR16',
+        sampleRateHertz: 24000,
+        pitch: gender === 'MALE' ? -3.0 : 0.0,
+        speakingRate: 1.0
+      }
+    })
+  });
+
+  const data = await res.json();
+  if (data.audioContent) {
+    return pcm16ToAudioBuffer(actx, data.audioContent, 24000);
   }
-  const len = bufs.reduce((a, b) => a + b.length, 0);
-  const out = actx.createBuffer(1, len, bufs[0].sampleRate);
-  const ch = out.getChannelData(0);
-  let off = 0;
-  for (const b of bufs) {
-    ch.set(b.getChannelData(0), off);
-    off += b.length;
+
+  // If Cloud TTS API is not enabled on the project, fallback to Gemini TTS automatically
+  const cloudErr = data.error?.message || "Cloud TTS Error";
+  log("⚠️ Cloud TTS (" + cloudErr + ") -> Gemini TTS ဖြင့် ကူညီထုတ်ပေးနေသည်...");
+
+  const gKey = geminiKey.value.trim() || ttsKey;
+  const vName = gender === 'MALE' ? 'Puck' : 'Kore';
+  const gRes = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=" + gKey, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      contents: [{ parts: [{ text: "Say in Burmese: " + clean }] }],
+      generationConfig: {
+        responseModalities: ["AUDIO"],
+        speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: vName } } }
+      }
+    })
+  });
+  const gData = await gRes.json();
+  const inl = gData.candidates?.[0]?.content?.parts?.[0]?.inlineData;
+  if (inl?.data) {
+    return pcm16ToAudioBuffer(actx, inl.data, 24000);
   }
-  return out;
+
+  throw new Error("Google Cloud Console တွင် 'Cloud Text-to-Speech API' ကို Enable ဖွင့်ပေးရန် လိုအပ်ပါသည် (" + cloudErr + ")");
 }
 
 el('previewVoiceBtn').onclick = async () => {
+  el('previewVoiceBtn').disabled = true;
   try {
     const actx = new (window.AudioContext || window.webkitAudioContext)();
-    const txt = recapScript.value.trim() || "မင်္ဂလာပါ ဂူဂဲလ် မြန်မာ အသံစနစ် ဖြစ်ပါသည်။";
-    const buf = await getTtsBuffer(actx, txt);
+    if (actx.state === 'suspended') await actx.resume();
+    const txt = recapScript.value.trim() || "မင်္ဂလာပါ၊ ဂူဂဲလ် ကလောက်ဒ် မြန်မာ အသံစနစ်ကို စမ်းသပ်နေပါသည်။";
+    const buf = await getCloudTtsAudioBuffer(actx, txt);
     const src = actx.createBufferSource();
     src.buffer = buf;
-    const g = document.querySelector('input[name="aiVoice"]:checked').value;
-    if (g === 'MALE') src.detune.value = -250;
     src.connect(actx.destination);
     src.start(0);
-    log("🔊 အသံဖွင့်နေပါသည်...");
-  } catch (e) {
-    alert("အသံအမှား: " + e.message);
-  }
-};
-
-el('aiAnalyzeBtn').onclick = async () => {
-  if (!uploadedFile) return alert("ဗီဒီယို အရင်တင်ပါ");
-  const key = geminiKey.value.trim();
-  if (!key) return alert("API Key ထည့်ပါ");
-  el('aiAnalyzeBtn').disabled = true;
-  try {
-    log("📸 ဗီဒီယိုပုံရိပ်များ ဖမ်းယူနေသည်...");
-    const parts = [{ text: "Write Burmese movie recap script with timestamps like [00:00], [00:03] for these frames. Only output Burmese lines:" }];
-    const oc = document.createElement('canvas');
-    oc.width = 360; oc.height = 202;
-    const octx = oc.getContext('2d');
-    const dur = Math.max(1, hiddenVideo.duration || 10);
-    for (let i = 0; i < 4; i++) {
-      hiddenVideo.currentTime = (dur / 4) * i + 0.2;
-      await new Promise(r => setTimeout(r, 600));
-      octx.drawImage(hiddenVideo, 0, 0, 360, 202);
-      const b64 = oc.toDataURL('image/jpeg', 0.6).split(',')[1];
-      parts.push({ inline_data: { mime_type: "image/jpeg", data: b64 } });
-    }
-    hiddenVideo.currentTime = 0.1;
-
-    const mRes = await fetch("https://generativelanguage.googleapis.com/v1beta/models?key=" + key);
-    const mData = await mRes.json();
-    let models = ['gemini-3.8-flash', 'gemini-3.5-flash-lite', 'gemini-2.5-flash'];
-    if (mData.models) {
-      const found = mData.models.map(m => m.name.replace('models/', '')).filter(n => n.includes('flash') && !n.includes('tts') && !n.includes('1.5') && !n.includes('2.0'));
-      if (found.length) models = found;
-    }
-
-    let okText = "";
-    let lastE = "";
-    for (const m of models) {
-      log("⏳ " + m + " ဖြင့် စစ်ဆေးနေသည်...");
-      const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + m + ":generateContent?key=" + key, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ contents: [{ parts }] })
-      });
-      const d = await res.json();
-      if (d.candidates?.[0]?.content?.parts?.[0]?.text) {
-        okText = d.candidates[0].content.parts[0].text.trim();
-        break;
-      }
-      lastE = d.error?.message || "Error";
-    }
-    if (!okText) throw new Error(lastE);
-    recapScript.value = okText;
-    log("✅ ဇာတ်လမ်းရရှိပါပြီ! အောက်က Generate ခလုတ်ကို နှိပ်ပါ။");
+    log("🔊 Google Cloud TTS အသံဖွင့်နေပါသည်...");
   } catch (e) {
     log("❌ " + e.message);
     alert(e.message);
+  } finally {
+    el('previewVoiceBtn').disabled = false;
+  }
+};
+
+// Step 2: Analyze Video Visuals + Speech using gemini-3.5-flash-lite
+el('aiAnalyzeBtn').onclick = async () => {
+  if (!uploadedFile) return alert("၁။ ဗီဒီယို အရင်တင်ပါ");
+  const key = geminiKey.value.trim();
+  if (!key) return alert("Gemini API Key ထည့်ပါ");
+
+  el('aiAnalyzeBtn').disabled = true;
+  try {
+    const dur = Math.round(hiddenVideo.duration || 15);
+    const promptText = `ဤဗီဒီယို (ကြာချိန် ${dur} စက္ကန့်) ၏ မြင်ကွင်းများနှင့် ပြောစကားများကို သေချာစစ်ဆေးပြီး Voiceover အသံထုတ်ရန်အတွက် စက္ကန့်အလိုက် မြန်မာလို Movie Recap ဇာတ်ကြောင်းပြောစခရစ် ရေးပေးပါ။ စာကြောင်းတိုင်းရှေ့တွင် [00:00], [00:03] စသဖြင့် အချိန်တပ်ပေးပါ။ မြန်မာစခရစ်သီးသန့်သာ ထုတ်ပေးပါ။`;
+
+    const parts = [{ text: promptText }];
+
+    // If video is <= 18MB, send full video+audio so 3.5 Flash-Lite hears speech AND sees visuals
+    if (uploadedFile.size <= 18 * 1024 * 1024) {
+      log("📹 ဗီဒီယို၏ မြင်ကွင်းနှင့် ပြောစကားအသံများကိုပါ 3.5 Flash-Lite သို့ ပို့နေသည်...");
+      const b64Video = await fileToBase64(uploadedFile);
+      parts.push({
+        inline_data: {
+          mime_type: uploadedFile.type || "video/mp4",
+          data: b64Video
+        }
+      });
+    } else {
+      log("📸 ဗီဒီယိုဖိုင်ကြီးသဖြင့် အဓိကမြင်ကွင်းများကို ဖမ်းယူနေသည်...");
+      const oc = document.createElement('canvas');
+      oc.width = 420; oc.height = 236;
+      const octx = oc.getContext('2d');
+      for (let i = 0; i < 6; i++) {
+        hiddenVideo.currentTime = (dur / 6) * i + 0.2;
+        await new Promise(r => setTimeout(r, 600));
+        octx.drawImage(hiddenVideo, 0, 0, 420, 236);
+        const b64 = oc.toDataURL('image/jpeg', 0.65).split(',')[1];
+        parts.push({ inline_data: { mime_type: "image/jpeg", data: b64 } });
+      }
+      hiddenVideo.currentTime = 0.1;
+    }
+
+    const safetySettings = [
+      { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+      { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+      { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+      { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
+    ];
+
+    // Primary model: gemini-3.5-flash-lite as requested
+    const models = ['gemini-3.5-flash-lite', 'gemini-3.5-flash-lite-preview', 'gemini-3.8-flash'];
+    let scriptResult = "";
+    let lastErr = "";
+
+    for (const m of models) {
+      log("🧠 " + m + " ဖြင့် မြင်ကွင်းနှင့် ပြောစကားများကို စခရစ်ရေးနေသည်...");
+      const res = await fetch("https://generativelanguage.googleapis.com/v1beta/models/" + m + ":generateContent?key=" + key, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts }], safetySettings })
+      });
+      const d = await res.json();
+      if (d.candidates?.[0]?.content?.parts?.[0]?.text) {
+        scriptResult = d.candidates[0].content.parts[0].text.trim();
+        break;
+      }
+      lastErr = d.error?.message || "Model Error";
+    }
+
+    if (!scriptResult) throw new Error(lastErr);
+    recapScript.value = scriptResult;
+    log("✅ gemini-3.5-flash-lite မှ စခရစ်ထုတ်ပေးပြီးပါပြီ! အောက်က Generate ခလုတ်ကို နှိပ်နိုင်ပါပြီ။");
+  } catch (e) {
+    log("❌ " + e.message);
+    alert("စခရစ်အမှား: " + e.message);
   } finally {
     el('aiAnalyzeBtn').disabled = false;
   }
 };
 
+// Step 3: Merge Video + Subtitles + Google Cloud TTS Audio
 el('startGenerateBtn').onclick = async () => {
-  if (!uploadedFile || !recapScript.value.trim()) return alert("ဗီဒီယိုနှင့် စာသား လိုအပ်ပါသည်");
+  if (!uploadedFile || !recapScript.value.trim()) return alert("ဗီဒီယိုနှင့် စခရစ်စာသား လိုအပ်ပါသည်");
   if (isBusy) return;
   isBusy = true;
   el('renderProgressBox').classList.remove('hidden');
+
   try {
     const actx = new (window.AudioContext || window.webkitAudioContext)();
     if (actx.state === 'suspended') await actx.resume();
-    const abuf = await getTtsBuffer(actx, recapScript.value);
+
+    el('renderStepText').textContent = "☁️ Google Cloud TTS အသံထုတ်နေသည်...";
+    const abuf = await getCloudTtsAudioBuffer(actx, recapScript.value);
+
     const dest = actx.createMediaStreamDestination();
     const src = actx.createBufferSource();
     src.buffer = abuf;
-    const g = document.querySelector('input[name="aiVoice"]:checked').value;
-    if (g === 'MALE') src.detune.value = -250;
+
     const dur = hiddenVideo.duration || 10;
-    if (abuf.duration > dur) src.playbackRate.value = Math.min(1.4, abuf.duration / dur);
+    if (abuf.duration > dur) {
+      src.playbackRate.value = Math.min(1.4, abuf.duration / dur);
+    }
+
     src.connect(dest);
     src.connect(actx.destination);
 
@@ -296,9 +390,11 @@ el('startGenerateBtn').onclick = async () => {
       return m ? { t: parseInt(m[1]) * 60 + parseInt(m[2]), txt: m[3] } : { t: (dur / lines.length) * i, txt: l };
     });
 
+    el('renderStepText').textContent = "🎬 ဗီဒီယိုနှင့် Cloud TTS အသံ ပေါင်းစပ်နေသည်...";
     hiddenVideo.currentTime = 0;
     const cStream = studioCanvas.captureStream(30);
     const mix = new MediaStream([...cStream.getVideoTracks(), ...dest.stream.getAudioTracks()]);
+
     const chunks = [];
     const rec = new MediaRecorder(mix, { mimeType: 'video/webm' });
     rec.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
@@ -306,9 +402,10 @@ el('startGenerateBtn').onclick = async () => {
       const blob = new Blob(chunks, { type: 'video/webm' });
       const dl = el('downloadReadyBtn');
       dl.href = URL.createObjectURL(blob);
-      dl.download = "RECAP_" + Date.now() + ".webm";
+      dl.download = "RECAP_CLOUD_TTS_" + Date.now() + ".webm";
       dl.classList.remove('opacity-40', 'pointer-events-none');
-      log("🎉 ဗီဒီယိုနှင့်အသံ ထုတ်လုပ်ပြီးပါပြီ! ဒေါင်းလုဒ်ဆွဲနိုင်ပါပြီ။");
+      el('renderStepText').textContent = "✅ ပြီးဆုံးပါပြီ!";
+      log("🎉 ဗီဒီယိုနှင့် Google Cloud TTS အသံ ပေါင်းစပ်ပြီးပါပြီ! ဒေါင်းလုဒ်ဆွဲနိုင်ပါပြီ။");
       isBusy = false;
     };
 
@@ -334,7 +431,8 @@ el('startGenerateBtn').onclick = async () => {
     }
     requestAnimationFrame(loop);
   } catch (e) {
-    alert("Error: " + e.message);
+    log("❌ " + e.message);
+    alert("အသံထုတ်ယူမှု အခက်အခဲ - " + e.message);
     isBusy = false;
   }
 };
