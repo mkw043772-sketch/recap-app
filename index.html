@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f172a">
-    <title>RECAP MM Studio Pro - Final Fixed</title>
+    <title>RECAP MM Studio Pro - Ultra Fix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -25,9 +25,6 @@
             color: white;
             border-color: transparent;
         }
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: #0f172a; }
-        ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 4px; }
     </style>
 </head>
 <body class="min-h-screen p-3 md:p-6 pb-16">
@@ -37,20 +34,20 @@
         <div class="flex items-center justify-between w-full lg:w-auto">
             <div class="flex items-center gap-3">
                 <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-2xl shadow-lg">
-                    
+                    🎬
                 </div>
                 <div>
-                    <h1 class="text-lg md:text-xl font-bold text-white">RECAP MM <span class="text-[11px] bg-emerald-600 px-2 py-0.5 rounded-full font-normal">VOICEOVER READY</span></h1>
-                    <p class="text-[11px] text-slate-400">မြန်မာ Voiceover နှင့် စာတန်းထိုးစနစ်</p>
+                    <h1 class="text-lg md:text-xl font-bold text-white">RECAP MM <span class="text-[11px] bg-emerald-600 px-2 py-0.5 rounded-full font-normal">ULTRA FIX v9</span></h1>
+                    <p class="text-[11px] text-slate-400">Safety Bypass & Smart Frame Analyzer</p>
                 </div>
             </div>
         </div>
 
         <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-end">
-            <input type="password" id="geminiKey" placeholder=" Gemini API Key ထည့်ပါ" 
+            <input type="password" id="geminiKey" placeholder="🔑 Gemini API Key ထည့်ပါ" 
                 class="flex-1 lg:w-72 bg-slate-900 border-2 border-amber-500/60 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-400">
             <a href="https://aistudio.google.com/app/apikey" target="_blank" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-3 py-2 rounded-xl text-xs font-bold transition">
-                 API Key ယူရန်
+                🔗 API Key ယူရန်
             </a>
         </div>
     </nav>
@@ -67,9 +64,9 @@
                 </div>
                 <label class="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-indigo-500/40 rounded-xl cursor-pointer hover:border-indigo-400 hover:bg-indigo-950/20 transition">
                     <div class="flex flex-col items-center justify-center text-center px-3">
-                        <span class="text-xl mb-1"></span>
+                        <span class="text-xl mb-1">📤</span>
                         <p class="text-xs md:text-sm font-bold text-slate-200" id="uploadLabel">ဗီဒီယိုဖိုင် ရွေးချယ်ရန် နှိပ်ပါ</p>
-                        <p class="text-[10px] text-slate-400 mt-0.5">မူရင်းအသံကို အလိုအလျောက် ဖျောက်မည်</p>
+                        <p class="text-[10px] text-slate-400 mt-0.5">မည်သည့်ဗီဒီယိုမဆို လျင်မြန်စွာ စစ်ဆေးပေးမည်</p>
                     </div>
                     <input type="file" id="videoUpload" accept="video/*" class="hidden">
                 </label>
@@ -80,22 +77,26 @@
                     <h2 class="text-sm font-bold text-amber-400">၂။ AI ဖြင့် ဇာတ်လမ်းနှင့် စာသားထုတ်ရန်</h2>
                     <span id="syncStatus" class="text-[11px] bg-rose-950 text-rose-300 border border-rose-700 px-2 py-0.5 rounded-full">မစစ်ဆေးရသေးပါ</span>
                 </div>
-                <button id="aiAnalyzeBtn" class="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-600 hover:opacity-95 text-white text-xs font-bold py-3 px-4 rounded-xl shadow-lg transition">
-                     AI ဖြင့် ဗီဒီယိုကို စစ်ဆေးပြီး ဇာတ်လမ်းထုတ်မည်
+                <button id="aiAnalyzeBtn" class="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-600 hover:opacity-95 text-white text-xs font-bold py-3 px-4 rounded-xl shadow-lg transition cursor-pointer">
+                    🧠 AI ဖြင့် ဗီဒီယိုကို စစ်ဆေးပြီး ဇာတ်လမ်းထုတ်မည်
                 </button>
+                
+                <!-- Error/Status Log Box -->
+                <div id="statusLog" class="hidden text-[11px] p-2.5 rounded-xl bg-slate-950 border border-slate-800 text-amber-300 leading-relaxed break-words"></div>
+
                 <div class="pt-2">
                     <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
-                        <span> စက္ကန့်အလိုက် ဇာတ်ကြောင်းပြောစာသားများ -</span>
-                        <button id="previewVoiceBtn" class="text-indigo-400 hover:text-indigo-300 font-bold"> အသံစမ်းသပ်ရန်</button>
+                        <span>⏱️ စက္ကန့်အလိုက် ဇာတ်ကြောင်းပြောစာသားများ -</span>
+                        <button id="previewVoiceBtn" class="text-indigo-400 hover:text-indigo-300 font-bold">🔊 အသံစမ်းသပ်ရန်</button>
                     </div>
-                    <textarea id="recapScript" rows="6" placeholder="[00:00] ဗီဒီယိုတင်ပြီး AI ဖြင့် စစ်ဆေးပါ..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 leading-relaxed focus:outline-none focus:border-indigo-500"></textarea>
+                    <textarea id="recapScript" rows="6" placeholder="[00:00] ဗီဒီယိုတင်ပြီး AI ဖြင့် စစ်ဆေးပါ (သို့မဟုတ်) စာသားကိုယ်တိုင် ရိုက်ထည့်ပါ..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 leading-relaxed focus:outline-none focus:border-indigo-500"></textarea>
                 </div>
             </div>
 
             <div class="card rounded-2xl p-4 md:p-5 shadow-lg space-y-4">
                 <h2 class="text-sm font-bold text-indigo-400">၃။ ဆက်တင်များ (Ratio & Voice)</h2>
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-2"> ဗီဒီယို အချိုးအစား</label>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">📐 ဗီဒီယို အချိုးအစား</label>
                     <div class="grid grid-cols-4 gap-2">
                         <button type="button" data-ratio="9:16" class="ratio-btn active-tab border border-slate-700 py-2 rounded-xl text-xs font-bold transition">9:16</button>
                         <button type="button" data-ratio="16:9" class="ratio-btn bg-slate-900 border border-slate-700 py-2 rounded-xl text-xs font-bold transition">16:9</button>
@@ -104,15 +105,15 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-2"> AI အသံရွေးချယ်ရန်</label>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">🎙️ AI အသံရွေးချယ်ရန်</label>
                     <div class="grid grid-cols-2 gap-2.5">
                         <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 p-2.5 rounded-xl cursor-pointer">
                             <input type="radio" name="aiVoice" value="male" checked class="accent-indigo-500">
-                            <span class="text-xs font-bold"> ယောက်ျားလေးအသံ</span>
+                            <span class="text-xs font-bold">👦 ယောက်ျားလေးအသံ</span>
                         </label>
                         <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 p-2.5 rounded-xl cursor-pointer">
                             <input type="radio" name="aiVoice" value="female" class="accent-indigo-500">
-                            <span class="text-xs font-bold"> မိန်းကလေးအသံ</span>
+                            <span class="text-xs font-bold">👩 မိန်းကလေးအသံ</span>
                         </label>
                     </div>
                 </div>
@@ -123,7 +124,7 @@
         <div class="lg:col-span-7 flex flex-col gap-5">
             <div class="card rounded-2xl p-4 md:p-5 shadow-xl flex-1 flex flex-col items-center justify-between min-h-[480px]">
                 <div class="w-full flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
-                    <span class="text-xs font-bold text-slate-200"> ဗီဒီယို နမူနာ & ဂျင်နရေးမျက်နှာပြင်</span>
+                    <span class="text-xs font-bold text-slate-200">👁️ ဗီဒီယို နမူနာ & ဂျင်နရေးမျက်နှာပြင်</span>
                     <span id="stateLabel" class="text-xs bg-slate-800 text-indigo-300 px-3 py-1 rounded-full font-bold">အသင့်ရှိနေပါသည်</span>
                 </div>
 
@@ -135,7 +136,7 @@
 
                 <div id="renderProgressBox" class="w-full mt-4 bg-slate-900/90 border border-indigo-500/30 rounded-xl p-3.5 hidden">
                     <div class="flex items-center justify-between text-xs mb-1.5">
-                        <span id="renderStepText" class="text-indigo-300 font-bold"> Voiceover နှင့် ဗီဒီယို Mux လုပ်နေသည်...</span>
+                        <span id="renderStepText" class="text-indigo-300 font-bold">⏳ ဗီဒီယို ထုတ်လုပ်နေပါသည်...</span>
                         <span id="renderPercentText" class="text-sm font-bold text-white">0%</span>
                     </div>
                     <div class="w-full bg-slate-800 h-2.5 rounded-full overflow-hidden">
@@ -145,10 +146,10 @@
 
                 <div class="w-full grid grid-cols-1 sm:grid-cols-2 gap-3.5 mt-4 pt-3 border-t border-slate-800/80">
                     <button id="startGenerateBtn" class="w-full bg-gradient-to-r from-indigo-600 via-purple-600 to-indigo-600 hover:opacity-95 text-white font-bold py-3.5 px-5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm cursor-pointer">
-                        <span> ဗီဒီယို စတင် Generate လုပ်မည်</span>
+                        <span>🚀 ဗီဒီယို စတင် Generate လုပ်မည်</span>
                     </button>
                     <a id="downloadReadyBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm opacity-40 pointer-events-none">
-                        <span> ဒေါင်းလုဒ်ဆွဲရန်</span>
+                        <span>📥 ဒေါင်းလုဒ်ဆွဲရန်</span>
                     </a>
                 </div>
             </div>
@@ -162,10 +163,9 @@
         const hiddenVideo = document.getElementById('hiddenVideo');
         const studioCanvas = document.getElementById('studioCanvas');
         const ctx = studioCanvas.getContext('2d');
-        const colorPreset = document.getElementById('colorPreset') || { value: 'cinematic' };
-        const showSubtitles = document.getElementById('showSubtitles') || { checked: true };
         const recapScript = document.getElementById('recapScript');
         const syncStatus = document.getElementById('syncStatus');
+        const statusLog = document.getElementById('statusLog');
         const aiAnalyzeBtn = document.getElementById('aiAnalyzeBtn');
         const previewVoiceBtn = document.getElementById('previewVoiceBtn');
         const startGenerateBtn = document.getElementById('startGenerateBtn');
@@ -189,6 +189,12 @@
         geminiKey.addEventListener('input', () => {
             localStorage.setItem('recap_gemini_key', geminiKey.value.trim());
         });
+
+        function showLog(msg, isError = false) {
+            statusLog.classList.remove('hidden');
+            statusLog.textContent = msg;
+            statusLog.className = `text-[11px] p-2.5 rounded-xl border leading-relaxed break-words ${isError ? 'bg-rose-950/70 border-rose-700 text-rose-200' : 'bg-slate-950 border-slate-800 text-amber-300'}`;
+        }
 
         ratioButtons.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -215,10 +221,10 @@
             const file = e.target.files[0];
             if (!file) return;
             uploadedVideoFile = file;
-            uploadLabel.textContent = ` ${file.name}`;
-            syncStatus.textContent = " စစ်ဆေးရန်လိုသည်";
+            uploadLabel.textContent = `✅ ${file.name}`;
+            syncStatus.textContent = "⚠️ စစ်ဆေးရန် အသင့်";
             syncStatus.className = "text-[11px] bg-amber-950 text-amber-300 border border-amber-700 px-2 py-0.5 rounded-full";
-            recapScript.value = "";
+            statusLog.classList.add('hidden');
             activeSubtitle = "";
 
             hiddenVideo.src = URL.createObjectURL(file);
@@ -229,7 +235,7 @@
                 const secs = Math.floor(hiddenVideo.duration % 60).toString().padStart(2, '0');
                 durationTag.textContent = `${mins}:${secs}`;
                 hiddenVideo.currentTime = 0.2;
-                stateLabel.textContent = " ဗီဒီယို အသင့်ဖြစ်ပါပြီ";
+                stateLabel.textContent = "✅ ဗီဒီယို အသင့်ဖြစ်ပါပြီ";
             };
         });
 
@@ -244,12 +250,17 @@
             if (hiddenVideo.readyState >= 2) {
                 const vw = hiddenVideo.videoWidth;
                 const vh = hiddenVideo.videoHeight;
-                ctx.drawImage(hiddenVideo, 0, 0, cw, ch);
+                const scale = Math.min(cw / vw, ch / vh);
+                const nw = vw * scale;
+                const nh = vh * scale;
+                const nx = (cw - nw) / 2;
+                const ny = (ch - nh) / 2;
+                ctx.drawImage(hiddenVideo, nx, ny, nw, nh);
             } else {
                 ctx.fillStyle = '#94a3b8';
                 ctx.font = 'bold 18px Padauk';
                 ctx.textAlign = 'center';
-                ctx.fillText('ဗီဒီယိုဖိုင် တင်ပါ', cw / 2, ch / 2);
+                ctx.fillText('၁။ ဗီဒီယိုဖိုင် အရင်တင်ပါ', cw / 2, ch / 2);
             }
 
             if (activeSubtitle) {
@@ -260,14 +271,37 @@
         function renderSub(text) {
             const cw = studioCanvas.width;
             const ch = studioCanvas.height;
-            const fontSize = Math.max(18, Math.round(cw * 0.038));
-            ctx.font = `bold ${fontSize}px Padauk`;
+            const margin = 24;
+            const maxW = cw - margin * 2;
+            const fontSize = Math.max(18, Math.round(cw * 0.04));
+            ctx.font = `bold ${fontSize}px Padauk, sans-serif`;
             ctx.textAlign = 'center';
-            ctx.fillStyle = '#fde047';
-            ctx.strokeStyle = '#000';
-            ctx.lineWidth = 3;
-            ctx.strokeText(text, cw / 2, ch - 80);
-            ctx.fillText(text, cw / 2, ch - 80);
+
+            const words = text.split(' ');
+            const lines = [];
+            let curLine = words[0] || '';
+            for (let i = 1; i < words.length; i++) {
+                const test = curLine + ' ' + words[i];
+                if (ctx.measureText(test).width < maxW) curLine = test;
+                else { lines.push(curLine); curLine = words[i]; }
+            }
+            lines.push(curLine);
+
+            const lh = fontSize * 1.45;
+            const boxH = lines.length * lh;
+            const startY = ch - 100 - boxH;
+
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.78)';
+            ctx.fillRect(margin - 8, startY - 12, maxW + 16, boxH + 24);
+
+            lines.forEach((l, i) => {
+                const y = startY + i * lh + lh / 2;
+                ctx.strokeStyle = '#000';
+                ctx.lineWidth = 4;
+                ctx.strokeText(l, cw / 2, y);
+                ctx.fillStyle = '#fde047';
+                ctx.fillText(l, cw / 2, y);
+            });
         }
 
         function triggerVoice(text) {
@@ -278,62 +312,131 @@
             const utter = new SpeechSynthesisUtterance(cleanText);
             utter.lang = 'my-MM';
             const gender = document.querySelector('input[name="aiVoice"]:checked').value;
-            utter.pitch = gender === 'male' ? 0.82 : 1.25;
+            utter.pitch = gender === 'male' ? 0.85 : 1.2;
             utter.rate = 0.95;
             window.speechSynthesis.speak(utter);
         }
 
         previewVoiceBtn.addEventListener('click', () => {
-            const line = recapScript.value.split(/\n+/)[0] || "မင်္ဂလာပါ";
+            const line = recapScript.value.split(/\n+/).filter(Boolean)[0] || "မင်္ဂလာပါ၊ အသံစမ်းသပ်နေပါသည်။";
             activeSubtitle = line.replace(/^\[\d{1,2}:\d{2}\]\s*/, '');
             renderCanvasFrame();
             triggerVoice(activeSubtitle);
         });
 
+        // Smart Frame Extractor (Lightweight & Fast)
+        async function extractSmartFrames(count = 6) {
+            const list = [];
+            const offCanvas = document.createElement('canvas');
+            offCanvas.width = 480;
+            offCanvas.height = 270;
+            const oCtx = offCanvas.getContext('2d');
+            const total = Math.max(1, hiddenVideo.duration || 10);
+
+            for (let i = 0; i < count; i++) {
+                const t = Math.min(total - 0.1, (total / count) * i + 0.2);
+                hiddenVideo.currentTime = t;
+                await new Promise(r => {
+                    const handler = () => { hiddenVideo.removeEventListener('seeked', handler); r(); };
+                    hiddenVideo.addEventListener('seeked', handler);
+                    setTimeout(r, 800);
+                });
+                oCtx.drawImage(hiddenVideo, 0, 0, 480, 270);
+                const mins = Math.floor(t / 60).toString().padStart(2, '0');
+                const secs = Math.floor(t % 60).toString().padStart(2, '0');
+                list.push({
+                    timeStr: `${mins}:${secs}`,
+                    b64: offCanvas.toDataURL('image/jpeg', 0.7).split(',')[1]
+                });
+            }
+            hiddenVideo.currentTime = 0.2;
+            return list;
+        }
+
+        // Multi-Model Fallback + Safety Bypass
+        async function callGeminiRobust(apiKey, parts) {
+            const modelsToTry = [
+                'gemini-2.5-flash',
+                'gemini-2.0-flash',
+                'gemini-1.5-flash',
+                'gemini-3.8-flash'
+            ];
+
+            const safetySettings = [
+                { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
+                { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
+                { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
+                { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
+            ];
+
+            let lastErr = "";
+
+            for (const model of modelsToTry) {
+                try {
+                    showLog(`⏳ ${model} မော်ဒယ်ဖြင့် ချိတ်ဆက်စစ်ဆေးနေသည်...`);
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts }],
+                            safetySettings
+                        })
+                    });
+
+                    const data = await res.json();
+
+                    if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
+                        return data.candidates[0].content.parts[0].text.trim();
+                    }
+
+                    if (data.promptFeedback?.blockReason || data.candidates?.[0]?.finishReason === 'SAFETY') {
+                        throw new Error("ဗီဒီယိုထဲရှိ ပုံရိပ်အချို့ကို Google AI Safety Filter က ကန့်သတ်ထားပါသည်။ အခြားဗီဒီယိုဖြင့် စမ်းပါ (သို့မဟုတ်) စာသားကိုယ်တိုင် ရိုက်ထည့်ပါ။");
+                    }
+
+                    lastErr = data.error?.message || JSON.stringify(data);
+                } catch (e) {
+                    lastErr = e.message;
+                    if (lastErr.includes("Safety Filter")) throw e;
+                }
+            }
+            throw new Error(lastErr);
+        }
+
         aiAnalyzeBtn.addEventListener('click', async () => {
-            if (!uploadedVideoFile) { alert("ဗီဒီယိုဖိုင် အရင်တင်ပါ။"); return; }
+            if (!uploadedVideoFile) { alert("၁။ ဗီဒီယိုဖိုင် အရင်ရွေးချယ်ပေးပါ။"); return; }
             const key = geminiKey.value.trim();
-            if (!key) { alert("Gemini API Key ထည့်ပါ။"); return; }
+            if (!key) { alert("ညာဘက်အပေါ်ထောင့်တွင် Gemini API Key အရင်ထည့်ပေးပါ။"); geminiKey.focus(); return; }
 
             aiAnalyzeBtn.disabled = true;
-            aiAnalyzeBtn.textContent = " AI စစ်ဆေးနေသည်...";
+            aiAnalyzeBtn.textContent = "⏳ ဗီဒီယိုပုံရိပ်များကို ထုတ်ယူစစ်ဆေးနေသည်...";
+
             try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${key}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contents: [{
-                            parts: [
-                                { text: "ဤဗီဒီယိုဇာတ်ဝင်ခန်းကို စက္ကန့်အလိုက် မြန်မာလို ရုပ်ရှင်ဇာတ်ကြောင်းပြော ပုံစံ [00:00] ဖြင့် အတိုချုပ် ရေးပေးပါ။" },
-                                { inline_data: { mime_type: "video/mp4", data: await fileToBase64(uploadedVideoFile) } }
-                            ]
-                        }]
-                    })
+                showLog("📸 ဗီဒီယိုထဲမှ အဓိက ဇာတ်ဝင်ခန်းပုံရိပ်များကို ဖမ်းယူနေပါသည်...");
+                const frames = await extractSmartFrames(6);
+                const totalSec = Math.round(hiddenVideo.duration || 30);
+
+                const parts = [
+                    { text: `ဤဗီဒီယို (ကြာချိန် ${totalSec} စက္ကန့်) ၏ ပုံရိပ်များကို ကြည့်ပြီး စက္ကန့်အလိုက် မြန်မာလို Movie Recap ဇာတ်ကြောင်းပြောစာသား ရေးပေးပါ။ စာကြောင်းတိုင်းရှေ့တွင် [00:00], [00:05] စသဖြင့် အချိန်တပ်ပေးပါ။ အပိုစကားမထည့်ပါနှင့်။` }
+                ];
+
+                frames.forEach(f => {
+                    parts.push({ text: `အချိန် [${f.timeStr}]:` });
+                    parts.push({ inline_data: { mime_type: "image/jpeg", data: f.b64 } });
                 });
-                const data = await res.json();
-                if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-                    recapScript.value = data.candidates[0].content.parts[0].text.trim();
-                    syncStatus.textContent = " ပြီးပါပြီ";
-                    syncStatus.className = "text-[11px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded-full";
-                } else {
-                    throw new Error("AI အဖြေမရပါ။");
-                }
+
+                const scriptText = await callGeminiRobust(key, parts);
+                recapScript.value = scriptText;
+                syncStatus.textContent = "✅ အောင်မြင်ပါသည်";
+                syncStatus.className = "text-[11px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded-full";
+                showLog("✅ ဇာတ်လမ်းထုတ်ယူမှု အောင်မြင်ပါသည်။ အောက်ပါ Generate ခလုတ်ကို နှိပ်နိုင်ပါပြီ။");
             } catch (err) {
-                alert("အမှား: " + err.message);
+                showLog(`❌ အမှားအယွင်းအသေးစိတ်: ${err.message}`, true);
+                alert("AI စစ်ဆေးမှု အခက်အခဲ - " + err.message);
             } finally {
                 aiAnalyzeBtn.disabled = false;
-                aiAnalyzeBtn.textContent = " AI ဖြင့် ဗီဒီယိုကို စစ်ဆေးပြီး ဇာတ်လမ်းထုတ်မည်";
+                aiAnalyzeBtn.textContent = "🧠 AI ဖြင့် ဗီဒီယိုကို စစ်ဆေးပြီး ဇာတ်လမ်းထုတ်မည်";
             }
         });
-
-        function fileToBase64(file) {
-            return new Promise((res, rej) => {
-                const reader = new FileReader();
-                reader.onload = () => res(reader.result.split(',')[1]);
-                reader.onerror = rej;
-                reader.readAsDataURL(file);
-            });
-        }
 
         function parseTimeline(raw, dur) {
             const lines = raw.split(/\n+/).map(s => s.trim()).filter(Boolean);
@@ -343,15 +446,15 @@
                 if (m) {
                     parsed.push({ time: parseInt(m[1])*60 + parseInt(m[2]), text: m[3] });
                 } else {
-                    parsed.push({ time: (dur/lines.length)*idx, text: line });
+                    parsed.push({ time: (dur / Math.max(1, lines.length)) * idx, text: line });
                 }
             });
-            return parsed.sort((a,b)=>a.time - b.time);
+            return parsed.sort((a,b) => a.time - b.time);
         }
 
         startGenerateBtn.addEventListener('click', async () => {
             if (!uploadedVideoFile || !recapScript.value.trim()) {
-                alert("ဗီဒီယိုနှင့် စခရစ် ဖြည့်စွက်ပါ။");
+                alert("ဗီဒီယိုတင်ပြီး စာသားရှိနေရန် လိုအပ်ပါသည်။");
                 return;
             }
             if (isRendering) return;
@@ -362,34 +465,23 @@
             const dur = hiddenVideo.duration || 10;
             const timeline = parseTimeline(recapScript.value, dur);
 
-            // Web Audio API to mix SpeechSynthesis into Recorder stream
-            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const dest = audioCtx.createMediaStreamDestination();
-
             hiddenVideo.muted = true;
             hiddenVideo.currentTime = 0;
             await hiddenVideo.play();
-            if (audioCtx.state === 'suspended') await audioCtx.resume();
 
             const canvasStream = studioCanvas.captureStream(30);
-            const combined = new MediaStream([
-                ...canvasStream.getVideoTracks(),
-                ...dest.stream.getAudioTracks()
-            ]);
-
             const chunks = [];
-            const recorder = new MediaRecorder(combined, { mimeType: 'video/webm' });
+            const recorder = new MediaRecorder(canvasStream, { mimeType: 'video/webm' });
             recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
             recorder.onstop = () => {
                 const blob = new Blob(chunks, { type: 'video/webm' });
                 downloadReadyBtn.href = URL.createObjectURL(blob);
                 downloadReadyBtn.download = `RECAP_${Date.now()}.webm`;
                 downloadReadyBtn.classList.remove('opacity-40', 'pointer-events-none');
-                renderStepText.textContent = " ဂျင်နရေးလုပ်ခြင်း ပြီးဆုံးပါပြီ!";
+                renderStepText.textContent = "✅ ဗီဒီယို ထုတ်လုပ်ခြင်း ပြီးဆုံးပါပြီ!";
                 isRendering = false;
                 startGenerateBtn.disabled = false;
                 window.speechSynthesis.cancel();
-                if (audioCtx.state !== 'closed') audioCtx.close();
             };
 
             recorder.start();
