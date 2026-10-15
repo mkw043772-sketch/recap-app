@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f172a">
-    <title>RECAP MM Studio Pro - v11 Real Voice</title>
+    <title>RECAP MM Studio Pro - v11.1 Final Fix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -37,7 +37,7 @@
                     🎬
                 </div>
                 <div>
-                    <h1 class="text-lg md:text-xl font-bold text-white">RECAP MM <span class="text-[11px] bg-emerald-600 px-2 py-0.5 rounded-full font-normal">v11 REAL VOICE</span></h1>
+                    <h1 class="text-lg md:text-xl font-bold text-white">RECAP MM <span class="text-[11px] bg-emerald-600 px-2 py-0.5 rounded-full font-normal">v11.1 FINAL</span></h1>
                     <p class="text-[11px] text-slate-400">AI Burmese Voiceover & Video Merger</p>
                 </div>
             </div>
@@ -305,7 +305,6 @@
             });
         }
 
-        // Convert raw PCM16 base64 from Gemini TTS into playable WAV Blob URL
         function pcmBase64ToWavUrl(b64, sampleRate = 24000) {
             const binary = atob(b64);
             const len = binary.length;
@@ -321,8 +320,8 @@
             writeStr(8, 'WAVE');
             writeStr(12, 'fmt ');
             view.setUint32(16, 16, true);
-            view.setUint16(20, 1, true); // PCM
-            view.setUint16(22, 1, true); // Mono
+            view.setUint16(20, 1, true);
+            view.setUint16(22, 1, true);
             view.setUint32(24, sampleRate, true);
             view.setUint32(28, sampleRate * 2, true);
             view.setUint16(32, 2, true);
@@ -338,7 +337,6 @@
             return URL.createObjectURL(blob);
         }
 
-        // Generate real Burmese TTS audio via Gemini TTS model
         async function fetchGeminiVoiceAudio(apiKey, rawScript) {
             const voiceName = document.querySelector('input[name="aiVoice"]:checked').value;
             const cleanNarration = rawScript
@@ -355,8 +353,9 @@
             }
 
             const ttsModels = [
-                'gemini-2.5-flash-preview-tts',
-                'gemini-2.0-flash-exp'
+                'gemini-2.5-flash',
+                'gemini-2.0-flash',
+                'gemini-2.5-flash-preview-tts'
             ];
 
             let lastError = "";
@@ -449,10 +448,9 @@
         async function callGeminiRobust(apiKey, parts) {
             const modelsToTry = [
                 'gemini-2.5-flash',
-                'gemini-2.5-flash-lite',
                 'gemini-2.0-flash',
-                'gemini-2.0-flash-lite',
-                'gemini-1.5-flash'
+                'gemini-2.5-flash-lite',
+                'gemini-2.0-flash-lite'
             ];
 
             const safetySettings = [
@@ -538,7 +536,6 @@
             return parsed.sort((a,b) => a.time - b.time);
         }
 
-        // Full Video + Recorded AI Voice Merger
         startGenerateBtn.addEventListener('click', async () => {
             if (!uploadedVideoFile || !recapScript.value.trim()) {
                 alert("ဗီဒီယိုတင်ပြီး စာသားရှိနေရန် လိုအပ်ပါသည်။");
@@ -554,10 +551,8 @@
             renderStepText.textContent = "🎙️ အဆင့် ၁/၂ - Gemini AI Voiceover အသံဖိုင် ထုတ်လုပ်နေပါသည်...";
 
             try {
-                // 1. Fetch AI Voice WAV
                 const wavUrl = await fetchGeminiVoiceAudio(key, recapScript.value);
 
-                // 2. Setup Web Audio API stream for recording into video file
                 const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 const resp = await fetch(wavUrl);
                 const arrayBuf = await resp.arrayBuffer();
@@ -568,12 +563,10 @@
                 sourceNode.buffer = audioBuffer;
 
                 const dur = hiddenVideo.duration || 10;
-                // Adjust playback rate slightly if audio is longer than video
                 if (audioBuffer.duration > dur * 1.05) {
                     sourceNode.playbackRate.value = Math.min(1.35, audioBuffer.duration / dur);
                 }
 
-                // Connect both to speakers AND to video recorder stream
                 sourceNode.connect(destNode);
                 sourceNode.connect(audioCtx.destination);
 
