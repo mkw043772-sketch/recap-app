@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f172a">
-    <title>RECAP MM Studio Pro - v12 Ultra Stable</title>
+    <title>RECAP MM Studio Pro - v15 Google TTS</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -37,14 +37,14 @@
                     🎬
                 </div>
                 <div>
-                    <h1 class="text-lg md:text-xl font-bold text-white">RECAP MM <span class="text-[11px] bg-emerald-600 px-2 py-0.5 rounded-full font-normal">v12 STABLE</span></h1>
-                    <p class="text-[11px] text-slate-400">AI Burmese Voiceover & Video Merger</p>
+                    <h1 class="text-lg md:text-xl font-bold text-white">RECAP MM <span class="text-[11px] bg-emerald-600 px-2 py-0.5 rounded-full font-normal">v15 GOOGLE TTS</span></h1>
+                    <p class="text-[11px] text-slate-400">Google Cloud & Free Burmese TTS Video Merger</p>
                 </div>
             </div>
         </div>
 
         <div class="flex flex-wrap items-center gap-2 w-full lg:w-auto justify-end">
-            <input type="password" id="geminiKey" placeholder="🔑 Gemini API Key ထည့်ပါ" 
+            <input type="password" id="geminiKey" placeholder="🔑 Gemini / Google Cloud API Key" 
                 class="flex-1 lg:w-72 bg-slate-900 border-2 border-amber-500/60 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-400">
             <a href="https://aistudio.google.com/app/apikey" target="_blank" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-3 py-2 rounded-xl text-xs font-bold transition">
                 🔗 API Key ယူရန်
@@ -86,14 +86,14 @@
                 <div class="pt-2">
                     <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
                         <span>⏱️ စက္ကန့်အလိုက် ဇာတ်ကြောင်းပြောစာသားများ -</span>
-                        <button id="previewVoiceBtn" class="bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 border border-indigo-500/40 px-2.5 py-1 rounded-lg font-bold transition">🔊 AI အသံထုတ်၍ နားထောင်ရန်</button>
+                        <button id="previewVoiceBtn" class="bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 border border-indigo-500/40 px-2.5 py-1 rounded-lg font-bold transition cursor-pointer">🔊 Google TTS အသံစမ်းရန်</button>
                     </div>
                     <textarea id="recapScript" rows="6" placeholder="[00:00] ဗီဒီယိုတင်ပြီး AI ဖြင့် စစ်ဆေးပါ (သို့မဟုတ်) စာသားကိုယ်တိုင် ရိုက်ထည့်ပါ..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs text-slate-100 leading-relaxed focus:outline-none focus:border-indigo-500"></textarea>
                 </div>
             </div>
 
             <div class="card rounded-2xl p-4 md:p-5 shadow-lg space-y-4">
-                <h2 class="text-sm font-bold text-indigo-400">၃။ ဆက်တင်များ (Ratio & AI Voice)</h2>
+                <h2 class="text-sm font-bold text-indigo-400">၃။ ဆက်တင်များ (Ratio & Google TTS Voice)</h2>
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-2">📐 ဗီဒီယို အချိုးအစား</label>
                     <div class="grid grid-cols-4 gap-2">
@@ -104,15 +104,15 @@
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-2">🎙️ Gemini AI အသံရွေးချယ်ရန် (ဗီဒီယိုထဲ တစ်ခါတည်းပါမည်)</label>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">🎙️ Google Text-to-Speech မြန်မာအသံ ရွေးရန်</label>
                     <div class="grid grid-cols-2 gap-2.5">
                         <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 p-2.5 rounded-xl cursor-pointer">
-                            <input type="radio" name="aiVoice" value="Puck" checked class="accent-indigo-500">
-                            <span class="text-xs font-bold">👦 ယောက်ျားလေးအသံ (Puck)</span>
+                            <input type="radio" name="aiVoice" value="FEMALE" checked class="accent-indigo-500">
+                            <span class="text-xs font-bold">👩 မိန်းကလေးအသံ (မူရင်းအကြည်)</span>
                         </label>
                         <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 p-2.5 rounded-xl cursor-pointer">
-                            <input type="radio" name="aiVoice" value="Kore" class="accent-indigo-500">
-                            <span class="text-xs font-bold">👩 မိန်းကလေးအသံ (Kore)</span>
+                            <input type="radio" name="aiVoice" value="MALE" class="accent-indigo-500">
+                            <span class="text-xs font-bold">👦 ယောက်ျားလေးအသံ (Deep Tone)</span>
                         </label>
                     </div>
                 </div>
@@ -181,14 +181,15 @@
         let currentRatio = '9:16';
         let activeSubtitle = "";
         let isRendering = false;
-        let cachedVoiceBlobUrl = null;
-        let lastCachedScriptKey = "";
+        let currentVideoUrl = null;
+        let discoveredModelsCache = null;
 
         if (localStorage.getItem('recap_gemini_key')) {
             geminiKey.value = localStorage.getItem('recap_gemini_key');
         }
         geminiKey.addEventListener('input', () => {
             localStorage.setItem('recap_gemini_key', geminiKey.value.trim());
+            discoveredModelsCache = null;
         });
 
         function showLog(msg, isError = false) {
@@ -228,7 +229,9 @@
             statusLog.classList.add('hidden');
             activeSubtitle = "";
 
-            hiddenVideo.src = URL.createObjectURL(file);
+            if (currentVideoUrl) URL.revokeObjectURL(currentVideoUrl);
+            currentVideoUrl = URL.createObjectURL(file);
+            hiddenVideo.src = currentVideoUrl;
             hiddenVideo.muted = true;
 
             hiddenVideo.onloadedmetadata = () => {
@@ -274,375 +277,4 @@
             const ch = studioCanvas.height;
             const margin = 24;
             const maxW = cw - margin * 2;
-            const fontSize = Math.max(18, Math.round(cw * 0.04));
-            ctx.font = `bold ${fontSize}px Padauk, sans-serif`;
-            ctx.textAlign = 'center';
-
-            const words = text.split(' ');
-            const lines = [];
-            let curLine = words[0] || '';
-            for (let i = 1; i < words.length; i++) {
-                const test = curLine + ' ' + words[i];
-                if (ctx.measureText(test).width < maxW) curLine = test;
-                else { lines.push(curLine); curLine = words[i]; }
-            }
-            lines.push(curLine);
-
-            const lh = fontSize * 1.45;
-            const boxH = lines.length * lh;
-            const startY = ch - 100 - boxH;
-
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.78)';
-            ctx.fillRect(margin - 8, startY - 12, maxW + 16, boxH + 24);
-
-            lines.forEach((l, i) => {
-                const y = startY + i * lh + lh / 2;
-                ctx.strokeStyle = '#000';
-                ctx.lineWidth = 4;
-                ctx.strokeText(l, cw / 2, y);
-                ctx.fillStyle = '#fde047';
-                ctx.fillText(l, cw / 2, y);
-            });
-        }
-
-        function pcmBase64ToWavUrl(b64, sampleRate = 24000) {
-            const binary = atob(b64);
-            const len = binary.length;
-            const buffer = new ArrayBuffer(44 + len);
-            const view = new DataView(buffer);
-
-            function writeStr(offset, str) {
-                for (let i = 0; i < str.length; i++) view.setUint8(offset + i, str.charCodeAt(i));
-            }
-
-            writeStr(0, 'RIFF');
-            view.setUint32(4, 36 + len, true);
-            writeStr(8, 'WAVE');
-            writeStr(12, 'fmt ');
-            view.setUint32(16, 16, true);
-            view.setUint16(20, 1, true);
-            view.setUint16(22, 1, true);
-            view.setUint32(24, sampleRate, true);
-            view.setUint32(28, sampleRate * 2, true);
-            view.setUint16(32, 2, true);
-            view.setUint16(34, 16, true);
-            writeStr(36, 'data');
-            view.setUint32(40, len, true);
-
-            for (let i = 0; i < len; i++) {
-                view.setUint8(44 + i, binary.charCodeAt(i));
-            }
-
-            const blob = new Blob([buffer], { type: 'audio/wav' });
-            return URL.createObjectURL(blob);
-        }
-
-        async function fetchGeminiVoiceAudio(apiKey, rawScript) {
-            const voiceName = document.querySelector('input[name="aiVoice"]:checked').value;
-            const cleanNarration = rawScript
-                .split(/\n+/)
-                .map(line => line.replace(/^\[\d{1,2}:\d{2}\]\s*/, '').trim())
-                .filter(Boolean)
-                .join(' ... ');
-
-            if (!cleanNarration) throw new Error("အသံထုတ်ရန် စာသား မရှိပါ။");
-
-            const cacheKey = `${voiceName}::${cleanNarration}`;
-            if (cachedVoiceBlobUrl && lastCachedScriptKey === cacheKey) {
-                return cachedVoiceBlobUrl;
-            }
-
-            const ttsModels = [
-                'gemini-2.5-flash',
-                'gemini-3.5-flash',
-                'gemini-2.0-flash'
-            ];
-
-            let lastError = "";
-            for (const model of ttsModels) {
-                try {
-                    showLog(`🎙️ Gemini AI (${voiceName}) အသံဖိုင်ကို ထုတ်လုပ်နေပါသည်...`);
-                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            contents: [{
-                                parts: [{ text: `Read the following Burmese movie recap narration clearly and naturally:\n\n${cleanNarration}` }]
-                            }],
-                            generationConfig: {
-                                responseModalities: ["AUDIO"],
-                                speechConfig: {
-                                    voiceConfig: {
-                                        prebuiltVoiceConfig: { voiceName }
-                                    }
-                                }
-                            }
-                        })
-                    });
-
-                    const data = await res.json();
-                    const inlineData = data.candidates?.[0]?.content?.parts?.[0]?.inlineData;
-                    if (inlineData?.data) {
-                        const wavUrl = pcmBase64ToWavUrl(inlineData.data, 24000);
-                        cachedVoiceBlobUrl = wavUrl;
-                        lastCachedScriptKey = cacheKey;
-                        return wavUrl;
-                    }
-                    lastError = data.error?.message || "TTS Audio မရရှိပါ။";
-                } catch (e) {
-                    lastError = e.message;
-                }
-            }
-            throw new Error(lastError);
-        }
-
-        previewVoiceBtn.addEventListener('click', async () => {
-            const key = geminiKey.value.trim();
-            if (!key) { alert("Gemini API Key အရင်ထည့်ပေးပါ။"); return; }
-            const text = recapScript.value.trim() || "မင်္ဂလာပါ၊ မြန်မာ ဗီဒီယို ဇာတ်ကြောင်းပြော စနစ်ကို စမ်းသပ်နေပါသည်။";
-
-            previewVoiceBtn.disabled = true;
-            previewVoiceBtn.textContent = "⏳ အသံထုတ်နေသည်...";
-            try {
-                const wavUrl = await fetchGeminiVoiceAudio(key, text);
-                const audio = new Audio(wavUrl);
-                audio.play();
-                showLog("🔊 AI Voiceover အသံဖွင့်နေပါသည်...");
-            } catch (err) {
-                showLog(`❌ အသံထုတ်ယူမှု အခက်အခဲ: ${err.message}`, true);
-                alert("AI အသံထုတ်မရပါ - " + err.message);
-            } finally {
-                previewVoiceBtn.disabled = false;
-                previewVoiceBtn.textContent = "🔊 AI အသံထုတ်၍ နားထောင်ရန်";
-            }
-        });
-
-        async function extractSmartFrames(count = 5) {
-            const list = [];
-            const offCanvas = document.createElement('canvas');
-            offCanvas.width = 420;
-            offCanvas.height = 236;
-            const oCtx = offCanvas.getContext('2d');
-            const total = Math.max(1, hiddenVideo.duration || 10);
-
-            for (let i = 0; i < count; i++) {
-                const t = Math.min(total - 0.1, (total / count) * i + 0.2);
-                hiddenVideo.currentTime = t;
-                await new Promise(r => {
-                    const handler = () => { hiddenVideo.removeEventListener('seeked', handler); r(); };
-                    hiddenVideo.addEventListener('seeked', handler);
-                    setTimeout(r, 700);
-                });
-                oCtx.drawImage(hiddenVideo, 0, 0, 420, 236);
-                const mins = Math.floor(t / 60).toString().padStart(2, '0');
-                const secs = Math.floor(t % 60).toString().padStart(2, '0');
-                list.push({
-                    timeStr: `${mins}:${secs}`,
-                    b64: offCanvas.toDataURL('image/jpeg', 0.65).split(',')[1]
-                });
-            }
-            hiddenVideo.currentTime = 0.2;
-            return list;
-        }
-
-        async function callGeminiRobust(apiKey, parts) {
-            const modelsToTry = [
-                'gemini-2.5-flash',
-                'gemini-3.5-flash',
-                'gemini-3.5-flash-lite',
-                'gemini-2.0-flash'
-            ];
-
-            const safetySettings = [
-                { category: "HARM_CATEGORY_HARASSMENT", threshold: "BLOCK_NONE" },
-                { category: "HARM_CATEGORY_HATE_SPEECH", threshold: "BLOCK_NONE" },
-                { category: "HARM_CATEGORY_SEXUALLY_EXPLICIT", threshold: "BLOCK_NONE" },
-                { category: "HARM_CATEGORY_DANGEROUS_CONTENT", threshold: "BLOCK_NONE" }
-            ];
-
-            let lastErr = "";
-            for (let round = 1; round <= 2; round++) {
-                for (const model of modelsToTry) {
-                    try {
-                        showLog(`⏳ ${model} ဖြင့် စစ်ဆေးနေသည် (အကြိမ် ${round})...`);
-                        const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({ contents: [{ parts }], safetySettings })
-                        });
-                        const data = await res.json();
-                        if (data.candidates?.[0]?.content?.parts?.[0]?.text) {
-                            return data.candidates[0].content.parts[0].text.trim();
-                        }
-                        lastErr = data.error?.message || JSON.stringify(data);
-                        if (res.status === 503 || res.status === 429) {
-                            await new Promise(r => setTimeout(r, 1200));
-                        }
-                    } catch (e) {
-                        lastErr = e.message;
-                    }
-                }
-            }
-            throw new Error(lastErr);
-        }
-
-        aiAnalyzeBtn.addEventListener('click', async () => {
-            if (!uploadedVideoFile) { alert("၁။ ဗီဒီယိုဖိုင် အရင်ရွေးချယ်ပေးပါ။"); return; }
-            const key = geminiKey.value.trim();
-            if (!key) { alert("ညာဘက်အပေါ်ထောင့်တွင် Gemini API Key အရင်ထည့်ပေးပါ။"); geminiKey.focus(); return; }
-
-            aiAnalyzeBtn.disabled = true;
-            aiAnalyzeBtn.textContent = "⏳ ဗီဒီယိုနှင့် အသံကို ပြင်ဆင်နေသည်...";
-
-            try {
-                showLog("📸 ဗီဒီယိုထဲမှ အဓိက ဇာတ်ဝင်ခန်းပုံရိပ်များကို ဖမ်းယူနေပါသည်...");
-                const frames = await extractSmartFrames(5);
-                const totalSec = Math.round(hiddenVideo.duration || 15);
-
-                const parts = [
-                    { text: `ဤဗီဒီယို (ကြာချိန် ${totalSec} စက္ကန့်) ၏ ပုံရိပ်များကို ကြည့်ပြီး စက္ကန့်အလိုက် မြန်မာလို Movie Recap ဇာတ်ကြောင်းပြောစာသား ရေးပေးပါ။ စာကြောင်းတိုင်းရှေ့တွင် [00:00], [00:03] စသဖြင့် အချိန်တပ်ပေးပါ။ အပိုစကားမထည့်ပါနှင့်။` }
-                ];
-
-                frames.forEach(f => {
-                    parts.push({ text: `အချိန် [${f.timeStr}]:` });
-                    parts.push({ inline_data: { mime_type: "image/jpeg", data: f.b64 } });
-                });
-
-                const scriptText = await callGeminiRobust(key, parts);
-                recapScript.value = scriptText;
-                syncStatus.textContent = "✅ အောင်မြင်ပါသည်";
-                syncStatus.className = "text-[11px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded-full";
-                showLog("✅ ဇာတ်လမ်းစာသား ရရှိပါပြီ။ အောက်ပါ Generate ခလုတ်ကို နှိပ်ပါက AI အသံနှင့် ဗီဒီယို ပေါင်းစပ်ထုတ်ပေးပါမည်။");
-            } catch (err) {
-                showLog(`❌ အမှားအယွင်းအသေးစိတ်: ${err.message}`, true);
-                alert("AI စစ်ဆေးမှု အခက်အခဲ - " + err.message);
-            } finally {
-                aiAnalyzeBtn.disabled = false;
-                aiAnalyzeBtn.textContent = "🧠 AI ဖြင့် ဗီဒီယိုစစ်ဆေးပြီး ဇာတ်လမ်းထုတ်မည်";
-            }
-        });
-
-        function parseTimeline(raw, dur) {
-            const lines = raw.split(/\n+/).map(s => s.trim()).filter(Boolean);
-            const parsed = [];
-            lines.forEach((line, idx) => {
-                const m = line.match(/^\[(\d{1,2}):(\d{2})\]\s*(.*)/);
-                if (m) {
-                    parsed.push({ time: parseInt(m[1])*60 + parseInt(m[2]), text: m[3] });
-                } else {
-                    parsed.push({ time: (dur / Math.max(1, lines.length)) * idx, text: line });
-                }
-            });
-            return parsed.sort((a,b) => a.time - b.time);
-        }
-
-        startGenerateBtn.addEventListener('click', async () => {
-            if (!uploadedVideoFile || !recapScript.value.trim()) {
-                alert("ဗီဒီယိုတင်ပြီး စာသားရှိနေရန် လိုအပ်ပါသည်။");
-                return;
-            }
-            const key = geminiKey.value.trim();
-            if (!key) { alert("AI အသံထုတ်ရန် Gemini API Key ထည့်ပေးပါ။"); return; }
-
-            if (isRendering) return;
-            isRendering = true;
-            startGenerateBtn.disabled = true;
-            renderProgressBox.classList.remove('hidden');
-            renderStepText.textContent = "🎙️ အဆင့် ၁/၂ - Gemini AI Voiceover အသံဖိုင် ထုတ်လုပ်နေပါသည်...";
-
-            try {
-                const wavUrl = await fetchGeminiVoiceAudio(key, recapScript.value);
-
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                const resp = await fetch(wavUrl);
-                const arrayBuf = await resp.arrayBuffer();
-                const audioBuffer = await audioCtx.decodeAudioData(arrayBuf);
-
-                const destNode = audioCtx.createMediaStreamDestination();
-                const sourceNode = audioCtx.createBufferSource();
-                sourceNode.buffer = audioBuffer;
-
-                const dur = hiddenVideo.duration || 10;
-                if (audioBuffer.duration > dur * 1.05) {
-                    sourceNode.playbackRate.value = Math.min(1.35, audioBuffer.duration / dur);
-                }
-
-                sourceNode.connect(destNode);
-                sourceNode.connect(audioCtx.destination);
-
-                renderStepText.textContent = "🎬 အဆင့် ၂/၂ - ဗီဒီယို၊ စာတန်းထိုးနှင့် AI အသံ ပေါင်းစပ်နေပါသည်...";
-
-                const timeline = parseTimeline(recapScript.value, dur);
-                hiddenVideo.muted = true;
-                hiddenVideo.currentTime = 0;
-
-                const canvasStream = studioCanvas.captureStream(30);
-                const combinedStream = new MediaStream([
-                    ...canvasStream.getVideoTracks(),
-                    ...destNode.stream.getAudioTracks()
-                ]);
-
-                let mimeType = 'video/webm;codecs=vp8,opus';
-                if (!MediaRecorder.isTypeSupported(mimeType)) {
-                    mimeType = 'video/webm';
-                }
-
-                const chunks = [];
-                const recorder = new MediaRecorder(combinedStream, { mimeType });
-                recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-                recorder.onstop = () => {
-                    const blob = new Blob(chunks, { type: 'video/webm' });
-                    downloadReadyBtn.href = URL.createObjectURL(blob);
-                    downloadReadyBtn.download = `RECAP_VOICE_${Date.now()}.webm`;
-                    downloadReadyBtn.classList.remove('opacity-40', 'pointer-events-none');
-                    renderStepText.textContent = "✅ အသံပါသော ဗီဒီယို ထုတ်လုပ်ခြင်း ပြီးဆုံးပါပြီ!";
-                    showLog("🎉 ဗီဒီယိုထဲတွင် AI Voiceover အသံပါဝင်သွားပါပြီ။ 'ဒေါင်းလုဒ်ဆွဲရန်' ကို နှိပ်နိုင်ပါပြီ။");
-                    isRendering = false;
-                    startGenerateBtn.disabled = false;
-                    audioCtx.close();
-                };
-
-                await hiddenVideo.play();
-                recorder.start();
-                sourceNode.start(0);
-
-                function step() {
-                    if (!isRendering) return;
-                    const t = hiddenVideo.currentTime;
-                    const pct = Math.min(100, Math.round((t / dur) * 100));
-                    renderBar.style.width = `${pct}%`;
-                    renderPercentText.textContent = `${pct}%`;
-
-                    let cur = -1;
-                    for (let i = 0; i < timeline.length; i++) {
-                        if (t >= timeline[i].time) cur = i;
-                    }
-                    if (cur !== -1) {
-                        activeSubtitle = timeline[cur].text;
-                    }
-
-                    renderCanvasFrame();
-
-                    if (!hiddenVideo.paused && !hiddenVideo.ended) {
-                        requestAnimationFrame(step);
-                    } else {
-                        renderBar.style.width = '100%';
-                        renderPercentText.textContent = '100%';
-                        try { sourceNode.stop(); } catch(e){}
-                        recorder.stop();
-                    }
-                }
-                requestAnimationFrame(step);
-
-            } catch (err) {
-                showLog(`❌ ဗီဒီယိုနှင့် အသံပေါင်းစပ်မှု အခက်အခဲ: ${err.message}`, true);
-                alert("အသံထုတ်ယူရာတွင် အခက်အခဲရှိပါသည် - " + err.message);
-                isRendering = false;
-                startGenerateBtn.disabled = false;
-            }
-        });
-
-        applyCanvasDimensions();
-    </script>
-</body>
-</html>
+            const fontSize = Math.max(18, Math.round(cw * 
