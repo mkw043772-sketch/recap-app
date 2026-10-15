@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#0f172a">
-    <title>RECAP MM Studio Pro - v11.1 Final Fix</title>
+    <title>RECAP MM Studio Pro - v12 Ultra Stable</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -37,7 +37,7 @@
                     🎬
                 </div>
                 <div>
-                    <h1 class="text-lg md:text-xl font-bold text-white">RECAP MM <span class="text-[11px] bg-emerald-600 px-2 py-0.5 rounded-full font-normal">v11.1 FINAL</span></h1>
+                    <h1 class="text-lg md:text-xl font-bold text-white">RECAP MM <span class="text-[11px] bg-emerald-600 px-2 py-0.5 rounded-full font-normal">v12 STABLE</span></h1>
                     <p class="text-[11px] text-slate-400">AI Burmese Voiceover & Video Merger</p>
                 </div>
             </div>
@@ -354,8 +354,8 @@
 
             const ttsModels = [
                 'gemini-2.5-flash',
-                'gemini-2.0-flash',
-                'gemini-2.5-flash-preview-tts'
+                'gemini-3.5-flash',
+                'gemini-2.0-flash'
             ];
 
             let lastError = "";
@@ -448,9 +448,9 @@
         async function callGeminiRobust(apiKey, parts) {
             const modelsToTry = [
                 'gemini-2.5-flash',
-                'gemini-2.0-flash',
-                'gemini-2.5-flash-lite',
-                'gemini-2.0-flash-lite'
+                'gemini-3.5-flash',
+                'gemini-3.5-flash-lite',
+                'gemini-2.0-flash'
             ];
 
             const safetySettings = [
