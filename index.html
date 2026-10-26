@@ -7,7 +7,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="RECAP MM">
-    <title>RECAP MM Pro - Stable Player Fix</title>
+    <title>RECAP MM Pro - Voiceover & Copy Fix</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Padauk:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -28,6 +28,10 @@
             color: white;
             border-color: transparent;
         }
+        textarea {
+            user-select: text !important;
+            -webkit-user-select: text !important;
+        }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #4f46e5; border-radius: 4px; }
@@ -44,9 +48,9 @@
                 </div>
                 <div>
                     <div class="flex items-center gap-2">
-                        <h1 class="text-lg md:text-2xl font-bold text-white">RECAP MM <span class="text-[11px] bg-emerald-600 px-2 py-0.5 rounded-full font-normal">STABLE PLAYER v5.0</span></h1>
+                        <h1 class="text-lg md:text-2xl font-bold text-white">RECAP MM <span class="text-[11px] bg-emerald-600 px-2 py-0.5 rounded-full font-normal">PRO v6.5</span></h1>
                     </div>
-                    <p class="text-[11px] md:text-xs text-slate-400">ဗီဒီယိုဖိုင် ပုံမှန်ပွင့်ပြီး မြန်မာ Voiceover ပါဝင်မည့်စနစ်</p>
+                    <p class="text-[11px] md:text-xs text-slate-400">မြန်မာ AI Voiceover နှင့် Script Copy စနစ်</p>
                 </div>
             </div>
 
@@ -62,7 +66,7 @@
                     class="w-full bg-slate-900 border-2 border-amber-500/60 rounded-xl px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-indigo-400">
             </div>
             <a href="https://aistudio.google.com/app/apikey" target="_blank" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-3 py-2 rounded-xl text-xs font-bold transition">
-                🔗 API Key အခမဲ့ယူရန်
+                ✨ API Key အခမဲ့ယူရန်
             </a>
         </div>
     </nav>
@@ -82,7 +86,7 @@
 
                 <label class="flex flex-col items-center justify-center w-full h-24 border-2 border-dashed border-indigo-500/40 rounded-xl cursor-pointer hover:border-indigo-400 hover:bg-indigo-950/20 transition">
                     <div class="flex flex-col items-center justify-center text-center px-3">
-                        <span class="text-xl mb-1">📤</span>
+                        <span class="text-xl mb-1">📁</span>
                         <p class="text-xs md:text-sm font-bold text-slate-200" id="uploadLabel">ဗီဒီယိုဖိုင် ရွေးချယ်ရန် နှိပ်ပါ</p>
                         <p class="text-[11px] text-slate-400 mt-0.5">မူရင်းအသံကို အော်တိုဖျောက်ပြီး မြန်မာအသံဖြင့် အစားထိုးမည်</p>
                     </div>
@@ -102,16 +106,30 @@
                 </p>
 
                 <button id="aiAnalyzeBtn" class="w-full bg-gradient-to-r from-amber-500 via-orange-500 to-pink-600 hover:opacity-95 text-white text-xs md:text-sm font-bold py-3 px-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 cursor-pointer">
-                    <span>🧠 AI ဖြင့် ဗီဒီယိုအစစ်ကို စစ်ဆေးပြီး စက္ကန့်အလိုက် ဇာတ်လမ်းထုတ်မည်</span>
+                    <span>🔍 AI ဖြင့် ဗီဒီယိုအစစ်ကို စစ်ဆေးပြီး စက္ကန့်အလိုက် ဇာတ်လမ်းထုတ်မည်</span>
                 </button>
 
-                <!-- Timestamped Script Editor -->
-                <div class="pt-2">
-                    <div class="flex items-center justify-between text-xs text-slate-400 mb-1">
-                        <span>⏱️ စက္ကန့်အလိုက် ဇာတ်ကြောင်းပြောစာသားများ -</span>
-                        <button id="previewVoiceBtn" class="text-indigo-400 hover:text-indigo-300 font-bold">🔊 အသံစမ်းသပ်ရန်</button>
+                <!-- Timestamped Script Editor & Copy Features -->
+                <div class="pt-2 space-y-2">
+                    <div class="flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400">
+                        <span>📝 စက္ကန့်အလိုက် ဇာတ်ကြောင်းပြောစာသားများ -</span>
+                        <button id="previewVoiceBtn" class="bg-indigo-600/30 hover:bg-indigo-600/50 text-indigo-300 border border-indigo-500/40 px-2.5 py-1 rounded-lg font-bold transition flex items-center gap-1 cursor-pointer">
+                            🔊 အသံစမ်းသပ်ရန်
+                        </button>
                     </div>
+
                     <textarea id="recapScript" rows="6" placeholder="[00:00] ဗီဒီယိုတင်ပြီး AI ဖြင့် စစ်ဆေးပါ..." class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs md:text-sm text-slate-100 leading-relaxed focus:outline-none focus:border-indigo-500"></textarea>
+
+                    <!-- Copy Script Buttons -->
+                    <div class="grid grid-cols-2 gap-2 pt-1">
+                        <button type="button" id="copyFullScriptBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-600 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer">
+                            <span>📋 စာသားအားလုံး Copy ကူးရန်</span>
+                        </button>
+                        <button type="button" id="copyCleanScriptBtn" class="bg-emerald-950/80 hover:bg-emerald-900/80 text-emerald-300 border border-emerald-700/60 py-2 px-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 cursor-pointer">
+                            <span>📄 အချိန်မပါဘဲ စာသားသီးသန့် ကူးရန်</span>
+                        </button>
+                    </div>
+                    <p id="copyToast" class="text-[11px] text-emerald-400 font-bold text-center hidden">✅ ဇာတ်လမ်းစာသားများကို Copy ကူးယူပြီးပါပြီ!</p>
                 </div>
             </div>
 
@@ -140,21 +158,21 @@
                 <div>
                     <label class="block text-xs font-bold text-slate-300 mb-1.5">🎨 အော်တို ကာလာချိန်းစနစ် (Auto Color)</label>
                     <select id="colorPreset" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2.5 text-xs md:text-sm text-slate-200 focus:outline-none focus:border-indigo-500">
-                        <option value="cinematic">✨ Auto Cinematic Warm (ရုပ်ရှင်ကာလာ)</option>
-                        <option value="vibrant">🔥 HDR Vibrant Boost (ကြည်လင်တောက်ပ)</option>
-                        <option value="thriller">❄️ Cold Mystery Tone (သည်းထိတ်ရင်ဖိုကာလာ)</option>
-                        <option value="drama">🎞️ Soft Emotional Drama (ဒရာမာကာလာ)</option>
-                        <option value="none">🚫 မူရင်းကာလာအတိုင်း ထားမည်</option>
+                        <option value="cinematic">🎬 Auto Cinematic Warm (ရုပ်ရှင်ကာလာ)</option>
+                        <option value="vibrant">✨ HDR Vibrant Boost (ကြည်လင်တောက်ပ)</option>
+                        <option value="thriller">🌙 Cold Mystery Tone (သည်းထိတ်ရင်ဖိုကာလာ)</option>
+                        <option value="drama">🌸 Soft Emotional Drama (ဒရာမာကာလာ)</option>
+                        <option value="none">📷 မူရင်းကာလာအတိုင်း ထားမည်</option>
                     </select>
                 </div>
 
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-2">🎙️ AI နောက်ခံအသံ (Voice Over) ရွေးရန်</label>
+                    <label class="block text-xs font-bold text-slate-300 mb-2">🎙️ AI နောက်ခံအသံ (Gemini Native Voice) ရွေးရန်</label>
                     <div class="grid grid-cols-2 gap-2.5">
                         <label class="flex items-center gap-2 bg-slate-900 border border-slate-700 p-2.5 rounded-xl cursor-pointer hover:border-indigo-500">
                             <input type="radio" name="aiVoice" value="male" checked class="accent-indigo-500">
                             <div>
-                                <p class="text-xs md:text-sm font-bold">👦 ယောက်ျားလေးအသံ</p>
+                                <p class="text-xs md:text-sm font-bold">👨 ယောက်ျားလေးအသံ</p>
                                 <p class="text-[10px] text-slate-400">တည်ငြိမ်သော ဇာတ်ကြောင်းပြောသံ</p>
                             </div>
                         </label>
@@ -203,7 +221,7 @@
                 <div id="renderProgressBox" class="w-full mt-4 bg-slate-900/90 border border-indigo-500/30 rounded-xl p-3.5 hidden">
                     <div class="flex items-center justify-between text-xs mb-1.5">
                         <span id="renderStepText" class="text-indigo-300 font-bold">
-                            ⏳ တည်ငြိမ်သော ဗီဒီယိုဖိုင် အပြည့်အစုံ Generate လုပ်နေပါသည်...
+                            ⏳ မြန်မာ Voiceover အသံနှင့် ဗီဒီယို အချိန်ကိုက် Generate လုပ်နေပါသည်...
                         </span>
                         <span id="renderPercentText" class="text-sm font-bold text-white">0%</span>
                     </div>
@@ -219,7 +237,7 @@
                     </button>
 
                     <a id="downloadReadyBtn" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-3.5 px-5 rounded-xl shadow-lg transition flex items-center justify-center gap-2 text-sm opacity-40 pointer-events-none">
-                        <span>📥 Generate ပြီးသော ဗီဒီယို ဒေါင်းလုဒ်ဆွဲရန်</span>
+                        <span>⬇️ Generate ပြီးသော ဗီဒီယို ဒေါင်းလုဒ်ဆွဲရန်</span>
                     </a>
                 </div>
             </div>
@@ -241,6 +259,9 @@
         const syncStatus = document.getElementById('syncStatus');
         const aiAnalyzeBtn = document.getElementById('aiAnalyzeBtn');
         const previewVoiceBtn = document.getElementById('previewVoiceBtn');
+        const copyFullScriptBtn = document.getElementById('copyFullScriptBtn');
+        const copyCleanScriptBtn = document.getElementById('copyCleanScriptBtn');
+        const copyToast = document.getElementById('copyToast');
         const startGenerateBtn = document.getElementById('startGenerateBtn');
         const downloadReadyBtn = document.getElementById('downloadReadyBtn');
         const renderProgressBox = document.getElementById('renderProgressBox');
@@ -255,6 +276,7 @@
         let currentRatio = '9:16';
         let activeSubtitle = "";
         let isRendering = false;
+        let previewAudioCtx = null;
 
         if (localStorage.getItem('recap_gemini_key')) {
             geminiKey.value = localStorage.getItem('recap_gemini_key');
@@ -263,6 +285,52 @@
             localStorage.setItem('recap_gemini_key', geminiKey.value.trim());
         });
 
+        // =========================================================================
+        // COPY SCRIPT FUNCTIONS (Supports Mobile & Embedded Iframes)
+        // =========================================================================
+        async function copyTextToClipboard(textToCopy, toastMessage) {
+            if (!textToCopy.trim()) {
+                alert("ကော်ပီကူးရန် ဇာတ်လမ်းစာသား မရှိသေးပါ။");
+                return;
+            }
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(textToCopy);
+                } else {
+                    const tempInput = document.createElement('textarea');
+                    tempInput.value = textToCopy;
+                    tempInput.style.position = 'fixed';
+                    tempInput.style.opacity = '0';
+                    document.body.appendChild(tempInput);
+                    tempInput.focus();
+                    tempInput.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(tempInput);
+                }
+                copyToast.textContent = toastMessage;
+                copyToast.classList.remove('hidden');
+                setTimeout(() => copyToast.classList.add('hidden'), 3000);
+            } catch (err) {
+                alert("Copy ကူးရာတွင် အမှားအယွင်းရှိပါသည်: " + err.message);
+            }
+        }
+
+        copyFullScriptBtn.addEventListener('click', () => {
+            copyTextToClipboard(recapScript.value, "✅ အချိန်မှတ်အပါအဝင် စာသားအားလုံးကို Copy ကူးပြီးပါပြီ!");
+        });
+
+        copyCleanScriptBtn.addEventListener('click', () => {
+            const cleanLines = recapScript.value
+                .split(/\n+/)
+                .map(line => line.replace(/^\[\d{1,2}:\d{2}\]\s*/, '').trim())
+                .filter(Boolean)
+                .join('\n\n');
+            copyTextToClipboard(cleanLines, "✅ အချိန်မှတ်မပါဘဲ ဇာတ်လမ်းစာသားသီးသန့်ကို Copy ကူးပြီးပါပြီ!");
+        });
+
+        // =========================================================================
+        // RATIO & CANVAS RENDERING
+        // =========================================================================
         ratioButtons.forEach(btn => {
             btn.addEventListener('click', () => {
                 ratioButtons.forEach(b => {
@@ -292,7 +360,7 @@
             if (!file) return;
             uploadedVideoFile = file;
             uploadLabel.textContent = `✅ ${file.name}`;
-            syncStatus.textContent = "⚠️ AI စစ်ဆေးရန် လိုအပ်သည်";
+            syncStatus.textContent = "⏳ AI စစ်ဆေးရန် လိုအပ်သည်";
             syncStatus.className = "text-[11px] bg-amber-950 text-amber-300 border border-amber-700 px-2 py-0.5 rounded-full";
             recapScript.value = "";
             activeSubtitle = "";
@@ -305,7 +373,7 @@
                 const secs = Math.floor(hiddenVideo.duration % 60).toString().padStart(2, '0');
                 durationTag.textContent = `${mins}:${secs}`;
                 hiddenVideo.currentTime = 0.2;
-                stateLabel.textContent = "✅ ဗီဒီယိုတင်ပြီးပါပြီ";
+                stateLabel.textContent = "📹 ဗီဒီယိုတင်ပြီးပါပြီ";
             };
         });
 
@@ -407,32 +475,126 @@
             });
         }
 
-        function triggerBurmeseVoiceOver(text) {
-            if (!('speechSynthesis' in window)) return;
-            window.speechSynthesis.cancel();
+        // =========================================================================
+        // REAL BURMESE TTS ENGINE (Gemini 2.5 Native TTS + Web Audio PCM Decoder)
+        // =========================================================================
+        async function fetchBurmeseAudioBuffer(text, audioCtx) {
+            const cleanText = text.replace(/^\[\d{1,2}:\d{2}\]\s*/, '').trim();
+            if (!cleanText) return null;
+
+            const key = geminiKey.value.trim();
+            const gender = document.querySelector('input[name="aiVoice"]:checked').value;
+            const voiceName = gender === 'male' ? 'Puck' : 'Aoede';
+
+            // 1. Primary Method: Gemini 2.5 Flash Native TTS (Works with Free AI Studio Key)
+            if (key) {
+                try {
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${key}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: cleanText }] }],
+                            generationConfig: {
+                                responseModalities: ["AUDIO"],
+                                speechConfig: {
+                                    voiceConfig: {
+                                        prebuiltVoiceConfig: { voiceName: voiceName }
+                                    }
+                                }
+                            }
+                        })
+                    });
+                    const json = await res.json();
+                    const inlineData = json.candidates?.[0]?.content?.parts?.[0]?.inlineData;
+                    if (inlineData && inlineData.data) {
+                        const binaryStr = atob(inlineData.data);
+                        const len = binaryStr.length;
+                        const bytes = new Uint8Array(len);
+                        for (let i = 0; i < len; i++) {
+                            bytes[i] = binaryStr.charCodeAt(i);
+                        }
+                        // Gemini TTS returns 24000Hz 16-bit mono PCM
+                        const int16 = new Int16Array(bytes.buffer);
+                        const audioBuffer = audioCtx.createBuffer(1, int16.length, 24000);
+                        const channelData = audioBuffer.getChannelData(0);
+                        for (let i = 0; i < int16.length; i++) {
+                            channelData[i] = int16[i] / 32768.0;
+                        }
+                        return audioBuffer;
+                    }
+                } catch (e) {
+                    console.warn("Gemini Native TTS error:", e);
+                }
+            }
+
+            return null;
+        }
+
+        async function playBurmeseVoiceSegment(text, audioCtx, destinationNode = null) {
             const cleanText = text.replace(/^\[\d{1,2}:\d{2}\]\s*/, '').trim();
             if (!cleanText) return;
 
-            const utter = new SpeechSynthesisUtterance(cleanText);
-            utter.lang = 'my-MM';
-            const gender = document.querySelector('input[name="aiVoice"]:checked').value;
-            utter.pitch = gender === 'male' ? 0.82 : 1.25;
-            utter.rate = 0.95;
-
-            window.speechSynthesis.speak(utter);
+            const buffer = await fetchBurmeseAudioBuffer(cleanText, audioCtx);
+            if (buffer) {
+                const source = audioCtx.createBufferSource();
+                source.buffer = buffer;
+                // Connect to speaker so user hears it
+                source.connect(audioCtx.destination);
+                // Also connect to recorder stream if generating video
+                if (destinationNode) {
+                    source.connect(destinationNode);
+                }
+                source.start(0);
+                return buffer.duration;
+            } else {
+                // Fallback to browser speech synthesis if API key is missing
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    const utter = new SpeechSynthesisUtterance(cleanText);
+                    utter.lang = 'my-MM';
+                    window.speechSynthesis.speak(utter);
+                }
+                return 3;
+            }
         }
 
-        previewVoiceBtn.addEventListener('click', () => {
+        previewVoiceBtn.addEventListener('click', async () => {
             const firstLine = recapScript.value.split(/\n+/).map(s => s.trim()).filter(Boolean)[0];
-            if (firstLine) {
+            if (!firstLine) {
+                alert("အသံစမ်းသပ်ရန် စာသားအကွက်ထဲတွင် မြန်မာစာသား အရင်ထည့်ပါ သို့မဟုတ် AI ဖြင့် စစ်ဆေးပါ။");
+                return;
+            }
+            if (!geminiKey.value.trim()) {
+                alert("မြန်မာ AI အသံအစစ် ထုတ်လုပ်ရန် အပေါ်ညာဘက်တွင် Gemini API Key ထည့်ပေးပါ။");
+                geminiKey.focus();
+                return;
+            }
+
+            previewVoiceBtn.disabled = true;
+            previewVoiceBtn.textContent = "⏳ အသံထုတ်နေသည်...";
+
+            try {
+                if (!previewAudioCtx || previewAudioCtx.state === 'closed') {
+                    previewAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                }
+                if (previewAudioCtx.state === 'suspended') {
+                    await previewAudioCtx.resume();
+                }
+
                 activeSubtitle = firstLine.replace(/^\[\d{1,2}:\d{2}\]\s*/, '');
                 renderCanvasFrame();
-                triggerBurmeseVoiceOver(activeSubtitle);
+                await playBurmeseVoiceSegment(activeSubtitle, previewAudioCtx);
+            } finally {
+                previewVoiceBtn.disabled = false;
+                previewVoiceBtn.textContent = "🔊 အသံစမ်းသပ်ရန်";
             }
         });
 
+        // =========================================================================
+        // GEMINI VIDEO ANALYSIS
+        // =========================================================================
         async function callGeminiWithAutoModel(apiKey, parts) {
-            const candidateModels = ['gemini-3.8-flash', 'gemini-3.0-flash', 'gemini-2.5-flash'];
+            const candidateModels = ['gemini-2.5-flash', 'gemini-2.5-flash-lite', 'gemini-1.5-flash'];
             let lastError = "API အဖြေ မရရှိပါ။";
             for (const modelName of candidateModels) {
                 try {
@@ -461,7 +623,7 @@
 
             const key = geminiKey.value.trim();
             if (!key) {
-                alert("⚠️ ဗီဒီယိုထဲက အကြောင်းအရာအစစ်ကို AI ဖြင့် စစ်ဆေးရန် အပေါ်ညာဘက်ရှိ 'Gemini API Key' အကွက်တွင် Key ထည့်ပေးပါ။");
+                alert("🔑 ဗီဒီယိုထဲက အကြောင်းအရာအစစ်ကို AI ဖြင့် စစ်ဆေးရန် အပေါ်ညာဘက်ရှိ 'Gemini API Key' အကွက်တွင် Key ထည့်ပေးပါ။");
                 geminiKey.focus();
                 return;
             }
@@ -506,12 +668,12 @@
                 recapScript.value = resultScript;
                 syncStatus.textContent = "✅ ဗီဒီယိုနှင့် 100% ချိတ်ဆက်ပြီး";
                 syncStatus.className = "text-[11px] bg-emerald-950 text-emerald-300 border border-emerald-700 px-2 py-0.5 rounded-full";
-                stateLabel.textContent = "✅ ဇာတ်လမ်းထုတ်ပြီးပါပြီ (Generate လုပ်နိုင်ပါပြီ)";
+                stateLabel.textContent = "✨ ဇာတ်လမ်းထုတ်ပြီးပါပြီ (Copy ကူးယူနိုင်ပါပြီ)";
             } catch (err) {
                 alert("AI စစ်ဆေးမှု အမှားအယွင်း: " + err.message);
             } finally {
                 aiAnalyzeBtn.disabled = false;
-                aiAnalyzeBtn.textContent = "🧠 AI ဖြင့် ဗီဒီယိုအစစ်ကို စစ်ဆေးပြီး စက္ကန့်အလိုက် ဇာတ်လမ်းထုတ်မည်";
+                aiAnalyzeBtn.textContent = "🔍 AI ဖြင့် ဗီဒီယိုအစစ်ကို စစ်ဆေးပြီး စက္ကန့်အလိုက် ဇာတ်လမ်းထုတ်မည်";
             }
         });
 
@@ -556,10 +718,10 @@
                 const match = line.match(/^\[(\d{1,2}):(\d{2})\]\s*(.*)/);
                 if (match) {
                     const sec = parseInt(match[1], 10) * 60 + parseInt(match[2], 10);
-                    parsed.push({ time: sec, text: match[3] });
+                    parsed.push({ time: sec, text: match[3], audioBuffer: null });
                 } else {
                     const fallbackTime = (totalDuration / Math.max(1, lines.length)) * idx;
-                    parsed.push({ time: fallbackTime, text: line });
+                    parsed.push({ time: fallbackTime, text: line, audioBuffer: null });
                 }
             });
 
@@ -567,7 +729,7 @@
         }
 
         // =========================================================================
-        // STABLE VIDEO-ONLY RECORDER (Guaranteed Playable Video + Live Speech)
+        // PRE-SYNTHESIZE AUDIO & RECORD VIDEO + VOICEOVER MUX
         // =========================================================================
         startGenerateBtn.addEventListener('click', async () => {
             if (!uploadedVideoFile) {
@@ -585,49 +747,69 @@
             startGenerateBtn.classList.add('opacity-50');
             downloadReadyBtn.classList.add('opacity-40', 'pointer-events-none');
             renderProgressBox.classList.remove('hidden');
-            stateLabel.textContent = "⚙️ ဗီဒီယိုကို တည်ငြိမ်စွာ Generate လုပ်နေသည်...";
 
             const totalDuration = hiddenVideo.duration || 10;
             const timeline = parseScriptTimeline(recapScript.value, totalDuration);
+
+            const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const dest = audioCtx.createMediaStreamDestination();
+            if (audioCtx.state === 'suspended') {
+                await audioCtx.resume();
+            }
+
+            // Step A: Pre-generate Burmese AI Voiceover for each line so playback doesn't lag
+            for (let i = 0; i < timeline.length; i++) {
+                renderStepText.textContent = `🎙️ မြန်မာ Voiceover အသံဖိုင် ပြင်ဆင်နေသည် (${i + 1}/${timeline.length})...`;
+                renderBar.style.width = `${Math.round(((i + 1) / timeline.length) * 40)}%`;
+                renderPercentText.textContent = `${Math.round(((i + 1) / timeline.length) * 40)}%`;
+                timeline[i].audioBuffer = await fetchBurmeseAudioBuffer(timeline[i].text, audioCtx);
+            }
+
+            renderStepText.textContent = "🎬 ဗီဒီယိုနှင့် မြန်မာအသံ အချိန်ကိုက် ပေါင်းစပ်နေပါသည်...";
 
             hiddenVideo.muted = true;
             hiddenVideo.currentTime = 0;
             await hiddenVideo.play();
 
-            // Use pure stable video/webm stream without audio track glitching
             const canvasStream = studioCanvas.captureStream(30);
+            const combinedStream = new MediaStream([
+                ...canvasStream.getVideoTracks(),
+                ...dest.stream.getAudioTracks()
+            ]);
+
             const chunks = [];
-            let mime = 'video/webm';
-            if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) {
-                mime = 'video/webm;codecs=vp9';
+            let mime = 'video/webm;codecs=vp9,opus';
+            if (!MediaRecorder.isTypeSupported(mime)) {
+                mime = 'video/webm';
             }
 
-            const recorder = new MediaRecorder(canvasStream, { mimeType: mime });
+            const recorder = new MediaRecorder(combinedStream, { mimeType: mime });
             recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
 
             recorder.onstop = () => {
                 const videoBlob = new Blob(chunks, { type: 'video/webm' });
                 const url = URL.createObjectURL(videoBlob);
                 downloadReadyBtn.href = url;
-                downloadReadyBtn.download = `RECAP_STABLE_${Date.now()}.webm`;
+                downloadReadyBtn.download = `RECAP_MM_${Date.now()}.webm`;
                 downloadReadyBtn.classList.remove('opacity-40', 'pointer-events-none');
 
-                renderStepText.textContent = "✅ ဗီဒီယိုဖိုင် အောင်မြင်စွာ ပြီးဆုံးပါပြီ! ဒေါင်းလုဒ်ဆွဲနိုင်ပါပြီ။";
-                stateLabel.textContent = "✅ အောင်မြင်ပါသည်";
+                renderStepText.textContent = "✅ မြန်မာ Voiceover အသံပါဝင်သော ဗီဒီယို Generate ပြီးပါပြီ!";
+                stateLabel.textContent = "🎉 အောင်မြင်ပါသည်";
                 isRendering = false;
                 startGenerateBtn.disabled = false;
                 startGenerateBtn.classList.remove('opacity-50');
-                window.speechSynthesis.cancel();
+                if (audioCtx && audioCtx.state !== 'closed') audioCtx.close();
             };
 
             recorder.start();
             let lastTriggeredIndex = -1;
+            let activeVoiceSource = null;
 
             function stepFrame() {
                 if (!isRendering) return;
 
                 const elapsedSec = hiddenVideo.currentTime;
-                const pct = Math.min(100, Math.round((elapsedSec / totalDuration) * 100));
+                const pct = 40 + Math.min(60, Math.round((elapsedSec / totalDuration) * 60));
                 renderBar.style.width = `${pct}%`;
                 renderPercentText.textContent = `${pct}%`;
 
@@ -641,7 +823,18 @@
                 if (currentIdx !== -1 && currentIdx !== lastTriggeredIndex) {
                     lastTriggeredIndex = currentIdx;
                     activeSubtitle = timeline[currentIdx].text;
-                    triggerBurmeseVoiceOver(activeSubtitle);
+
+                    if (timeline[currentIdx].audioBuffer) {
+                        if (activeVoiceSource) {
+                            try { activeVoiceSource.stop(); } catch (e) {}
+                        }
+                        const src = audioCtx.createBufferSource();
+                        src.buffer = timeline[currentIdx].audioBuffer;
+                        src.connect(dest);
+                        src.connect(audioCtx.destination);
+                        src.start(0);
+                        activeVoiceSource = src;
+                    }
                 }
 
                 renderCanvasFrame();
